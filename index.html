@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Самодиагностика чтения ребёнка 7-11 лет | Матриус</title>
+
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=98858030', 'ym');
+
+      ym(98858030, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/98858030" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  <!-- Top.Mail.Ru counter -->
+  <script type="text/javascript">
+  var _tmr = window._tmr || (window._tmr = []);
+  _tmr.push({id: "3743427", type: "pageView", start: (new Date()).getTime()});
+  (function (d, w, id) {
+    if (d.getElementById(id)) return;
+    var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+    ts.src = "https://top-fwz1.mail.ru/js/code.js";
+    var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+    if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+  })(document, window, "tmr-code");
+  </script>
+  <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3743427;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+  <!-- /Top.Mail.Ru counter -->
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --blue-dark: #385681;
+      --blue-mid: #4a6a98;
+      --blue-light: #86a8d6;
+      --blue-pale: #6082b1;
+      --orange: #ef6432;
+      --orange-hover: #ff7645;
+      --white: #ffffff;
+      --gray-bg: #f4f4f4;
+      --gray-text: #555;
+      --dark-text: #2a2a2a;
+      --radius: 24px;
+      --radius-sm: 14px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: var(--dark-text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: var(--blue-dark);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+    .header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      color: var(--white);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+    .header-cta {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .25s;
+      text-decoration: none;
+    }
+    .header-cta:hover { background: var(--orange-hover); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+      padding: 80px 0 90px;
+      color: var(--white);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140%;
+      height: 120px;
+      background: var(--white);
+      border-radius: 50% 50% 0 0;
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p {
+      font-size: 20px;
+      opacity: .92;
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.5;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+    .hero-btn {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      padding: 16px 40px;
+      border-radius: 30px;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .25s, transform .2s;
+      box-shadow: 0 4px 20px rgba(239,100,50,.35);
+    }
+    .hero-btn:hover { background: var(--orange-hover); transform: translateY(-2px); }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 70px 0; }
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--blue-dark);
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 18px;
+      color: var(--gray-text);
+      max-width: 600px;
+      margin: 0 auto 48px;
+    }
+
+    /* ===== IMPORTANCE ===== */
+    .importance { background: var(--gray-bg); }
+    .importance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .importance-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .importance-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,.1);
+    }
+    .importance-icon {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .importance-icon.blue { background: rgba(74,106,152,.12); }
+    .importance-icon.orange { background: rgba(239,100,50,.12); }
+    .importance-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--blue-dark);
+    }
+    .importance-card p {
+      font-size: 15px;
+      color: var(--gray-text);
+      line-height: 1.5;
+    }
+
+    /* ===== QUIZ ===== */
+    .quiz { background: var(--white); }
+    .quiz-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 48px 44px;
+      box-shadow: 0 4px 32px rgba(56,86,129,.12);
+      border: 1px solid rgba(56,86,129,.08);
+    }
+    .quiz-counter {
+      text-align: center;
+      font-size: 16px;
+      color: var(--gray-text);
+      margin-bottom: 32px;
+      font-weight: 600;
+    }
+    .quiz-counter span {
+      color: var(--orange);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .quiz-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      background: var(--gray-bg);
+      transition: background .2s, box-shadow .2s;
+      cursor: pointer;
+    }
+    .quiz-item:hover { background: #eef2f8; }
+    .quiz-item.active { background: #fff3ee; box-shadow: inset 0 0 0 2px var(--orange); }
+
+    .quiz-item-text {
+      font-size: 16px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .quiz-toggle {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .quiz-toggle button {
+      width: 52px;
+      height: 36px;
+      border-radius: 10px;
+      border: 2px solid #d0d5dd;
+      background: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--gray-text);
+    }
+    .quiz-toggle button.selected-yes {
+      background: var(--orange);
+      color: var(--white);
+      border-color: var(--orange);
+    }
+    .quiz-toggle button.selected-no {
+      background: var(--blue-mid);
+      color: var(--white);
+      border-color: var(--blue-mid);
+    }
+
+    .quiz-result {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      transition: all .4s ease;
+    }
+    .quiz-result.neutral {
+      background: #eef2f8;
+      color: var(--blue-dark);
+    }
+    .quiz-result.warning {
+      background: linear-gradient(135deg, #fff3ee, #ffe8dc);
+      color: var(--dark-text);
+      border: 1px solid rgba(239,100,50,.2);
+    }
+    .quiz-result p {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .quiz-result strong {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .quiz-result .result-cta {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--orange);
+      color: var(--white);
+      padding: 12px 32px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .25s, transform .2s;
+      box-shadow: 0 4px 16px rgba(239,100,50,.3);
+    }
+    .quiz-result .result-cta:hover { background: var(--orange-hover); transform: translateY(-2px); }
+
+    /* ===== BENEFITS ===== */
+    .benefits { background: var(--gray-bg); }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .benefit-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      transition: transform .25s;
+    }
+    .benefit-card:hover { transform: translateY(-4px); }
+    .benefit-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-mid), var(--blue-light));
+      color: var(--white);
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .benefit-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--blue-dark);
+    }
+    .benefit-card p {
+      font-size: 15px;
+      color: var(--gray-text);
+      line-height: 1.5;
+    }
+
+    /* ===== NORMS ===== */
+    .norms { background: var(--white); }
+    .norms-table {
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(56,86,129,.1);
+    }
+    .norms-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      font-size: 17px;
+      font-weight: 600;
+    }
+    .norms-row:nth-child(odd) { background: var(--gray-bg); }
+    .norms-row:nth-child(even) { background: var(--white); }
+    .norms-row.norms-header {
+      background: var(--blue-dark);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .norms-row .age { color: var(--blue-dark); }
+    .norms-row .words { color: var(--orange); font-weight: 800; }
+
+    /* ===== CTA / FORM ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+      padding: 80px 0;
+      color: var(--white);
+    }
+    .cta-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .cta-text h2 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .cta-text p {
+      font-size: 17px;
+      opacity: .9;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .cta-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+    .cta-list li {
+      font-size: 16px;
+      padding: 8px 0;
+      padding-left: 28px;
+      position: relative;
+      opacity: .92;
+    }
+    .cta-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 13px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 4px rgba(239,100,50,.25);
+    }
+
+    .form-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .cta-widget { width: 100%; min-height: 320px; }
+    .cta-widget iframe { width: 100% !important; border: 0; display: block; }
+    .form-card h3 {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+    }
+    .form-card .form-sub {
+      text-align: center;
+      font-size: 14px;
+      color: var(--gray-text);
+      margin-bottom: 28px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-text);
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e0e4ea;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: border-color .2s;
+      outline: none;
+      font-family: inherit;
+    }
+    .form-group input:focus { border-color: var(--blue-mid); }
+    .form-group input::placeholder { color: #b0b5bf; }
+
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .25s, transform .2s;
+      margin-top: 8px;
+      box-shadow: 0 4px 20px rgba(239,100,50,.35);
+      font-family: inherit;
+    }
+    .form-submit:hover { background: var(--orange-hover); transform: translateY(-2px); }
+
+    .form-note {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 14px;
+      line-height: 1.4;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--blue-dark);
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      padding: 28px 0;
+      font-size: 14px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 17px; }
+      .importance-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .cta-wrapper { grid-template-columns: 1fr; gap: 40px; }
+      .section-title { font-size: 28px; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 50px 0 60px; }
+      .hero h1 { font-size: 26px; }
+      .hero p { font-size: 16px; }
+      .hero-btn { padding: 14px 28px; font-size: 15px; }
+      section { padding: 50px 0; }
+      .quiz-box { padding: 28px 20px; }
+      .quiz-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .quiz-toggle { align-self: flex-end; }
+      .cta-text h2 { font-size: 26px; }
+      .norms-row { padding: 14px 20px; font-size: 15px; }
+      .header-cta { display: none; }
+      .header .container { justify-content: center; }
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <a href="#" class="logo">
+        <img src="logo.png" alt="Матриус" class="logo-img">
+      </a>
+      <a href="#signup" class="header-cta">Записаться на&nbsp;бесплатную самодиагностику</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Бесплатная самодиагностика за&nbsp;20 минут</div>
+      <h1>Узнайте, как на&nbsp;самом деле читает ваш ребёнок</h1>
+      <p>Проведите игровую самодиагностику чтения для детей 7–11 лет и&nbsp;получите полную картину навыков вашего ребёнка</p>
+      <a href="#quiz" class="hero-btn">Пройти самодиагностику</a>
+    </div>
+  </section>
+
+  <!-- IMPORTANCE -->
+  <section class="importance">
+    <div class="container">
+      <h2 class="section-title">Почему важно знать скорость чтения вашего ребёнка?</h2>
+      <p class="section-subtitle">Навык чтения напрямую влияет на&nbsp;успеваемость и&nbsp;уверенность ребёнка в&nbsp;школе</p>
+      <div class="importance-grid">
+        <div class="importance-card">
+          <div class="importance-icon blue">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a6a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div>
+            <h3>Понимание учебных текстов</h3>
+            <p>Дети с развитым навыком чтения понимают школьный материал в&nbsp;2&nbsp;раза лучше сверстников</p>
+          </div>
+        </div>
+        <div class="importance-card">
+          <div class="importance-icon orange">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef6432" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <h3>Быстрое выполнение заданий</h3>
+            <p>Быстрое чтение освобождает ресурсы мозга для понимания смысла, а&nbsp;не&nbsp;распознавания слов</p>
+          </div>
+        </div>
+        <div class="importance-card">
+          <div class="importance-icon blue">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a6a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <h3>Самостоятельность в&nbsp;учёбе</h3>
+            <p>Ребёнок легче осваивает новый материал и&nbsp;увереннее чувствует себя на&nbsp;уроках</p>
+          </div>
+        </div>
+        <div class="importance-card">
+          <div class="importance-icon orange">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef6432" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div>
+            <h3>Любовь к чтению</h3>
+            <p>Когда чтение даётся легко, ребёнок начинает читать с удовольствием, а&nbsp;не&nbsp;по&nbsp;принуждению</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz" id="quiz">
+    <div class="container">
+      <h2 class="section-title">Узнайте за минуту: нужна ли ребёнку помощь?</h2>
+      <p class="section-subtitle">Ответьте на&nbsp;5 коротких вопросов</p>
+      <div class="quiz-box">
+        <div class="quiz-counter">Вы ответили на&nbsp;<span id="answeredCount">0</span> из&nbsp;5</div>
+
+        <div class="quiz-item" data-index="0">
+          <span class="quiz-item-text">Ребёнок долго делает уроки</span>
+          <div class="quiz-toggle">
+            <button type="button" data-answer="yes" onclick="selectAnswer(0,'yes',this)">Да</button>
+            <button type="button" data-answer="no" onclick="selectAnswer(0,'no',this)">Нет</button>
+          </div>
+        </div>
+
+        <div class="quiz-item" data-index="1">
+          <span class="quiz-item-text">Ребёнок не любит читать</span>
+          <div class="quiz-toggle">
+            <button type="button" data-answer="yes" onclick="selectAnswer(1,'yes',this)">Да</button>
+            <button type="button" data-answer="no" onclick="selectAnswer(1,'no',this)">Нет</button>
+          </div>
+        </div>
+
+        <div class="quiz-item" data-index="2">
+          <span class="quiz-item-text">Ребёнок читает, но&nbsp;не&nbsp;может пересказать текст</span>
+          <div class="quiz-toggle">
+            <button type="button" data-answer="yes" onclick="selectAnswer(2,'yes',this)">Да</button>
+            <button type="button" data-answer="no" onclick="selectAnswer(2,'no',this)">Нет</button>
+          </div>
+        </div>
+
+        <div class="quiz-item" data-index="3">
+          <span class="quiz-item-text">Ребёнок неправильно ставит ударения в&nbsp;словах</span>
+          <div class="quiz-toggle">
+            <button type="button" data-answer="yes" onclick="selectAnswer(3,'yes',this)">Да</button>
+            <button type="button" data-answer="no" onclick="selectAnswer(3,'no',this)">Нет</button>
+          </div>
+        </div>
+
+        <div class="quiz-item" data-index="4">
+          <span class="quiz-item-text">Ребёнок путает буквы или окончания в&nbsp;словах</span>
+          <div class="quiz-toggle">
+            <button type="button" data-answer="yes" onclick="selectAnswer(4,'yes',this)">Да</button>
+            <button type="button" data-answer="no" onclick="selectAnswer(4,'no',this)">Нет</button>
+          </div>
+        </div>
+
+        <div class="quiz-result neutral" id="quizResult">
+          <p>Отвечайте на вопросы, чтобы получить рекомендацию</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <h2 class="section-title">Что даст самодиагностика?</h2>
+      <p class="section-subtitle">За 20 минут вы узнаете три ключевых показателя, которые влияют на&nbsp;учёбу</p>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-num">1</div>
+          <h3>Скорость чтения</h3>
+          <p>Узнаете, сколько слов в&nbsp;минуту читает ваш ребёнок, и&nbsp;сравните с&nbsp;возрастной нормой по&nbsp;ФГОС</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">2</div>
+          <h3>Понимание текста</h3>
+          <p>Поймёте, читает ли ребёнок осознанно или механически, без понимания смысла прочитанного</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">3</div>
+          <h3>Уровень внимания</h3>
+          <p>Увидите, насколько устойчива концентрация ребёнка во&nbsp;время чтения и&nbsp;работы с&nbsp;текстом</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA + FORM -->
+  <section class="cta-section" id="signup">
+    <div class="container">
+      <div class="cta-wrapper">
+        <div class="cta-text">
+          <h2>Запишитесь на&nbsp;бесплатную самодиагностику по&nbsp;скорочтению</h2>
+          <p>Помогите ребёнку читать легко и&nbsp;уверенно.</p>
+        </div>
+        <div class="form-card">
+          <div class="cta-widget">
+            <script id="fc403bae40d8ac08eb3455f0063893ef246d36aa" src="https://school-genius.club/pl/lite/widget/script?id=1592412"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>Онлайн-школа Матриус. Все права защищены.</p>
+    </div>
+  </footer>
+
+  <script>
+    const answers = [null, null, null, null, null];
+
+    function selectAnswer(index, answer, btn) {
+      answers[index] = answer;
+
+      const item = btn.closest('.quiz-item');
+      const buttons = item.querySelectorAll('.quiz-toggle button');
+      buttons.forEach(b => {
+        b.classList.remove('selected-yes', 'selected-no');
+      });
+
+      if (answer === 'yes') {
+        btn.classList.add('selected-yes');
+        item.classList.add('active');
+      } else {
+        btn.classList.add('selected-no');
+        item.classList.remove('active');
+      }
+
+      updateQuiz();
+    }
+
+    function updateQuiz() {
+      const yesCount = answers.filter(a => a === 'yes').length;
+      const answered = answers.filter(a => a !== null).length;
+      document.getElementById('answeredCount').textContent = answered;
+
+      const result = document.getElementById('quizResult');
+
+      if (answered === 0) {
+        result.className = 'quiz-result neutral';
+        result.innerHTML = '<p>Отвечайте на\u00a0вопросы, чтобы получить рекомендацию</p>';
+      } else if (yesCount >= 2) {
+        result.className = 'quiz-result warning';
+        result.innerHTML =
+          '<strong>Навык чтения уже может влиять на\u00a0учёбу</strong>' +
+          '<p>Вы\u00a0ответили \u00abДа\u00bb на\u00a0' + yesCount + ' из\u00a05 вопросов. Это сигнал, что ребёнку может быть полезна самодиагностика и\u00a0развитие навыка чтения.</p>' +
+          '<a href="#signup" class="result-cta">Записаться на\u00a0бесплатную самодиагностику</a>';
+      } else if (answered === 5) {
+        result.className = 'quiz-result neutral';
+        result.innerHTML =
+          '<p>Пока серьёзных сигналов нет, но\u00a0самодиагностика поможет увидеть полную картину навыков чтения вашего ребёнка.</p>';
+      } else {
+        result.className = 'quiz-result neutral';
+        result.innerHTML = '<p>Продолжайте отвечать на\u00a0вопросы, чтобы получить рекомендацию</p>';
+      }
+    }
+
+  </script>
+
+</body>
+</html>
