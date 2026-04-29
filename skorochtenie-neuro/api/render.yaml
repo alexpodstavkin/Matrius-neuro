@@ -1,0 +1,21 @@
+# Render.com Blueprint — auto-config для деплоя
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: matrius-gc-api
+    runtime: python
+    region: frankfurt
+    plan: free
+    rootDir: api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: GC_ACCOUNT
+        sync: false
+      - key: GC_SECRET_KEY
+        sync: false
+      - key: GC_OFFER_CODE
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://web.matrius.online,https://alexpodstavkin.github.io
