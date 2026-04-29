@@ -87,7 +87,9 @@ async function gcCreateDeal(env, payload, session) {
     params: encoded,
   });
 
-  const url = `https://${env.GC_ACCOUNT}.getcourse.ru/pl/api/deals`;
+  // GC_ACCOUNT может быть либо поддоменом (`matrius`), либо полным доменом (`school-genius.club`)
+  const host = env.GC_ACCOUNT.includes('.') ? env.GC_ACCOUNT : `${env.GC_ACCOUNT}.getcourse.ru`;
+  const url = `https://${host}/pl/api/deals`;
   const res = await fetch(url, {
     method: 'POST',
     body,
