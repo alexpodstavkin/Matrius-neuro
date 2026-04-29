@@ -1,0 +1,12 @@
+name = "matrius-gc-proxy"
+main = "getcourse-proxy.js"
+compatibility_date = "2024-09-01"
+
+# Секреты задаются командой:
+#   wrangler secret put GC_ACCOUNT
+#   wrangler secret put GC_SECRET_KEY
+#   wrangler secret put GC_OFFER_CODE
+#
+# Публичные переменные можно положить сюда:
+[vars]
+ALLOWED_ORIGIN = "https://web.matrius.online"
