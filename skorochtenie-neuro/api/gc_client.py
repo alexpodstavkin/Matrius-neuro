@@ -83,6 +83,12 @@ class GetCourseClient:
             result = data.get("result") or {}
             msg = result.get("error_message") or data.get("error_message") or "unknown"
             raise GetCourseError(f"GetCourse вернул ошибку: {msg} (raw: {data})")
+        # GC любит отвечать success:true на верхнем уровне и success:false внутри result —
+        # это «soft fail», который раньше проглатывался. Теперь падаем явно.
+        result = data.get("result") or {}
+        if result and (result.get("error") is True or result.get("success") is False):
+            msg = result.get("error_message") or "unknown"
+            raise GetCourseError(f"GetCourse вернул ошибку: {msg} (raw: {data})")
         return data
 
     def create_deal(

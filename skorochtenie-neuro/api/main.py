@@ -148,12 +148,26 @@ def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
         addfields["Имя ребёнка"] = payload.child
         note_lines.append(f"Имя ребёнка: {payload.child}")
 
-    user = {
+    user: dict[str, Any] = {
         "email": str(payload.email),
         "phone": payload.phone,
         "first_name": first_name,
-        "last_name": last_name,
         "addfields": addfields,
+    }
+    # Этот аккаунт GC валидирует last_name и не принимает пустую строку.
+    # Передаём только когда в форме реально ввели два слова.
+    if last_name:
+        user["last_name"] = last_name
+
+    # UTM-метки в доп. поля сделки (имена в админке GC: utm_*_c).
+    # Если метки нет — кладём 'no-detected', чтобы было видно «органику» и
+    # отчёты GC не путались с пустыми ячейками.
+    deal_addfields = {
+        "utm_source_c":   payload.utm_source   or "no-detected",
+        "utm_medium_c":   payload.utm_medium   or "no-detected",
+        "utm_campaign_c": payload.utm_campaign or "no-detected",
+        "utm_content_c":  payload.utm_content  or "no-detected",
+        "utm_term_c":     payload.utm_term     or "no-detected",
     }
 
     deal = {
@@ -161,6 +175,7 @@ def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
         "deal_status": "Новый",
         "deal_cost": "1",
         "deal_comment": "\n".join(note_lines),
+        "addfields": deal_addfields,
     }
 
     session = {
