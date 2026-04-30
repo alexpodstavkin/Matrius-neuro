@@ -65,7 +65,10 @@ export interface LeadResult {
 
 /** Отправка заявки в GC-прокси. Никогда не бросает — всегда возвращает структуру. */
 export async function submitLead(input: LeadInput, signal?: AbortSignal): Promise<LeadResult> {
-  const url = (import.meta.env.VITE_GC_PROXY_URL as string | undefined)?.trim();
+  // Дефолт — PHP-обработчик рядом с лендингом на том же домене.
+  // Можно переопределить через .env.production: VITE_GC_PROXY_URL=https://your-proxy/...
+  const envUrl = (import.meta.env.VITE_GC_PROXY_URL as string | undefined)?.trim();
+  const url = envUrl || `${import.meta.env.BASE_URL}php/submit.php`;
 
   const utms = readUtms();
   const referer =
@@ -82,13 +85,6 @@ export async function submitLead(input: LeadInput, signal?: AbortSignal): Promis
   for (const k of UTM_KEYS) {
     const v = utms[k];
     if (v) payload[k] = v;
-  }
-
-  if (!url) {
-    // Прокси не задеплоен / env пуст — не ломаем UX, но это попадёт в консоль для разработчика.
-    // eslint-disable-next-line no-console
-    console.warn('[matrius] VITE_GC_PROXY_URL не задан — заявка не уходит в GC.');
-    return { ok: true, skipped: true };
   }
 
   try {

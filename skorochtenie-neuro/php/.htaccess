@@ -1,0 +1,13 @@
+# Запрет прямого доступа к чувствительным файлам.
+# Копируется в public_root вместе с папкой php/.
+
+<FilesMatch "^\.env$|^\.env\.example$|\.log$">
+    Order allow,deny
+    Deny from all
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^logs/  - [F,L]
+</IfModule>
