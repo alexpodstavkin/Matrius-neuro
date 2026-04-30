@@ -27,10 +27,8 @@ Env-переменные:
 
 from __future__ import annotations
 
-import hashlib
 import logging
 import os
-import time
 from typing import Any
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
@@ -124,14 +122,6 @@ def health() -> dict[str, Any]:
     }
 
 
-def _deal_number(email: str, offer: str) -> str:
-    """Идемпотентный номер заказа с минутным окном."""
-    bucket = int(time.time()) // 60
-    raw = f"{email}|{offer}|{bucket}".encode("utf-8")
-    h = hashlib.sha1(raw).hexdigest()[:10]
-    return f"web-{h}"
-
-
 def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
     """Фоновая отправка в GC через snippet-клиент. Никогда не бросает —
     все ошибки логируются, фронт получит 202 раньше любого сетевого вызова."""
@@ -166,12 +156,11 @@ def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
         "addfields": addfields,
     }
 
-    deal_number = _deal_number(str(payload.email), GC_OFFER_CODE)
     deal = {
         "offer_code": GC_OFFER_CODE,
         "deal_status": "Новый",
+        "deal_cost": "1",
         "deal_comment": "\n".join(note_lines),
-        "deal_number": deal_number,
     }
 
     session = {
@@ -191,14 +180,15 @@ def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
         resp = gc.create_deal(user=user, deal=deal, session=session)
         result = resp.get("result", {}) or {}
         log.info(
-            "[%s] OK: user_id=%s deal_id=%s user_status=%s",
-            deal_number,
+            "[%s] OK: user_id=%s deal_id=%s deal_number=%s user_status=%s",
+            payload.email,
             result.get("user_id"),
             result.get("deal_id"),
+            result.get("deal_number"),
             result.get("user_status"),
         )
     except GetCourseError as e:
-        log.error("[%s] GC FAIL: %s", deal_number, e)
+        log.error("[%s] GC FAIL: %s", payload.email, e)
 
 
 @app.post("/api/booking", status_code=202)
