@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState, type FormEvent, type ChangeEvent } from 'react';
 import { ages } from '../../data/content';
 import { formatRussianPhone } from '../../lib/phoneMask';
+import { submitLead } from '../../lib/leads';
 import { Check, ArrowRight, Cross } from '../icons/icons';
 import { useBooking } from '../ui/BookingContext';
 
 const NBSP = ' ';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-type Field = 'parent' | 'phone' | 'child' | 'age';
+type Field = 'parent' | 'phone' | 'email' | 'child' | 'age';
 type Values = Record<Field, string>;
 type Errors = Partial<Record<Field, boolean>>;
 
-const REQUIRED: Field[] = ['parent', 'phone', 'age'];
+const REQUIRED: Field[] = ['parent', 'phone', 'email', 'age'];
 
 export function BookingModal() {
   const { isOpen, close } = useBooking();
-  const [values, setValues] = useState<Values>({ parent: '', phone: '', child: '', age: '' });
+  const [values, setValues] = useState<Values>({ parent: '', phone: '', email: '', child: '', age: '' });
   const [errors, setErrors] = useState<Errors>({});
   const [busy, setBusy] = useState(false);
   const [ok, setOk] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -35,36 +38,59 @@ export function BookingModal() {
     if (value.trim() && errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: false }));
     }
+    if (submitError) setSubmitError(null);
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (busy) return;
+    setSubmitError(null);
+
     const next: Errors = {};
     let firstInvalid: Field | null = null;
     for (const f of REQUIRED) {
-      const empty = !values[f].trim();
-      next[f] = empty;
-      if (empty && !firstInvalid) firstInvalid = f;
+      const v = values[f].trim();
+      const invalid = f === 'email' ? !EMAIL_RE.test(v) : !v;
+      next[f] = invalid;
+      if (invalid && !firstInvalid) firstInvalid = f;
     }
     setErrors(next);
     if (firstInvalid) {
       document.getElementById(firstInvalid)?.focus();
       return;
     }
+
     setBusy(true);
-    window.setTimeout(() => {
-      setBusy(false);
+    const result = await submitLead({
+      name: values.parent,
+      phone: values.phone,
+      email: values.email,
+      age: values.age,
+      child: values.child,
+    });
+    setBusy(false);
+
+    if (result.ok) {
       setOk(true);
-    }, 200);
+      if (typeof window !== 'undefined') {
+        const dl = (window as unknown as { dataLayer?: unknown[] }).dataLayer;
+        if (Array.isArray(dl)) {
+          dl.push({ event: 'lead_submitted', source: 'skorochtenie-neuro' });
+        }
+      }
+    } else {
+      setSubmitError(result.error || 'Не удалось отправить заявку.');
+    }
   };
 
   const onChange = (field: Field) =>
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => update(field, e.target.value);
 
   const reset = () => {
-    setValues({ parent: '', phone: '', child: '', age: '' });
+    setValues({ parent: '', phone: '', email: '', child: '', age: '' });
     setErrors({});
     setOk(false);
+    setSubmitError(null);
   };
 
   const handleClose = () => {
@@ -109,6 +135,17 @@ export function BookingModal() {
               {errors.phone && <span className="form-error">Введите номер телефона</span>}
             </div>
 
+            <div className={`form-row${errors.email ? ' has-error' : ''}`}>
+              <label htmlFor="email">E-mail</label>
+              <input
+                id="email" name="email" type="email"
+                placeholder="vy@example.com" autoComplete="email" inputMode="email" required
+                value={values.email} onChange={onChange('email')}
+                aria-invalid={errors.email || undefined}
+              />
+              {errors.email && <span className="form-error">Введите корректный e-mail</span>}
+            </div>
+
             <div className="form-grid-2">
               <div className="form-row">
                 <label htmlFor="child">Имя ребёнка</label>
@@ -138,9 +175,15 @@ export function BookingModal() {
               aria-busy={busy || undefined}
               disabled={busy}
             >
-              Записаться бесплатно
+              {busy ? 'Отправляем…' : 'Записаться бесплатно'}
               <ArrowRight />
             </button>
+
+            {submitError && (
+              <p className="form-error" role="alert" style={{ marginTop: 10 }}>
+                {submitError}
+              </p>
+            )}
 
             <p className="form-disclaimer">
               {`Нажимая кнопку, вы${NBSP}соглашаетесь с${NBSP}`}

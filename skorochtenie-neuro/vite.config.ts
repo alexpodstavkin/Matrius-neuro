@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/test/skorochtenie-neuro-2/',
+  base: '/skorochtenie-neuro/',
   server: { port: 5173, host: true },
 });

@@ -80,6 +80,7 @@ class BookingPayload(BaseModel):
     phone: str = Field(min_length=4, max_length=32)
     email: EmailStr
     age: str = Field(min_length=1, max_length=64)
+    child: str | None = Field(default=None, max_length=120)
 
     referer: str | None = None
     utm_source: str | None = None
@@ -92,6 +93,14 @@ class BookingPayload(BaseModel):
     @classmethod
     def _strip_phone(cls, v: str) -> str:
         return v.strip()
+
+    @field_validator("child")
+    @classmethod
+    def _strip_child(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+        v = v.strip()
+        return v or None
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -141,14 +150,22 @@ def _build_gc_params(payload: BookingPayload, request_referer: str | None) -> di
     parts = payload.name.strip().split(maxsplit=1)
     first_name = parts[0]
     last_name = parts[1] if len(parts) > 1 else ""
-    age_note = f"Возраст ребёнка: {payload.age}"
+
+    addfields: dict[str, str] = {"Возраст ребёнка": payload.age}
+    if payload.child:
+        addfields["Имя ребёнка"] = payload.child
+
+    note_lines = [f"Возраст ребёнка: {payload.age}"]
+    if payload.child:
+        note_lines.append(f"Имя ребёнка: {payload.child}")
+    deal_comment = "\n".join(note_lines)
 
     user_obj: dict[str, Any] = {
         "email": payload.email,
         "phone": payload.phone,
         "first_name": first_name,
         "last_name": last_name,
-        "addfields": {"Возраст ребёнка": payload.age},
+        "addfields": addfields,
     }
 
     session_obj: dict[str, str] = {}
@@ -162,7 +179,7 @@ def _build_gc_params(payload: BookingPayload, request_referer: str | None) -> di
     deal_obj: dict[str, Any] = {
         "offer_code": GC_OFFER_CODE,
         "deal_status": "Новый",
-        "deal_comment": age_note,
+        "deal_comment": deal_comment,
         "deal_number": _deal_number(payload.email, GC_OFFER_CODE),
     }
 
