@@ -7,16 +7,20 @@ import { useBooking } from '../ui/BookingContext';
 
 const NBSP = ' ';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PRIVACY_URL = 'https://matrius.online/privacypolicy';
 
-type Field = 'parent' | 'phone' | 'email' | 'child' | 'age';
+type Field = 'parent' | 'phone' | 'email' | 'age';
 type Values = Record<Field, string>;
-type Errors = Partial<Record<Field, boolean>>;
+type Errors = Partial<Record<Field, boolean>> & { consent?: boolean };
 
 const REQUIRED: Field[] = ['parent', 'phone', 'email', 'age'];
 
+const initialValues: Values = { parent: '', phone: '', email: '', age: '' };
+
 export function BookingModal() {
   const { isOpen, close } = useBooking();
-  const [values, setValues] = useState<Values>({ parent: '', phone: '', email: '', child: '', age: '' });
+  const [values, setValues] = useState<Values>(initialValues);
+  const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [busy, setBusy] = useState(false);
   const [ok, setOk] = useState(false);
@@ -54,9 +58,14 @@ export function BookingModal() {
       next[f] = invalid;
       if (invalid && !firstInvalid) firstInvalid = f;
     }
+    if (!consent) next.consent = true;
     setErrors(next);
     if (firstInvalid) {
       document.getElementById(firstInvalid)?.focus();
+      return;
+    }
+    if (!consent) {
+      document.getElementById('consent')?.focus();
       return;
     }
 
@@ -66,7 +75,6 @@ export function BookingModal() {
       phone: values.phone,
       email: values.email,
       age: values.age,
-      child: values.child,
     });
     setBusy(false);
 
@@ -86,8 +94,16 @@ export function BookingModal() {
   const onChange = (field: Field) =>
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => update(field, e.target.value);
 
+  const onConsentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setConsent(e.target.checked);
+    if (e.target.checked && errors.consent) {
+      setErrors((prev) => ({ ...prev, consent: false }));
+    }
+  };
+
   const reset = () => {
-    setValues({ parent: '', phone: '', email: '', child: '', age: '' });
+    setValues(initialValues);
+    setConsent(false);
     setErrors({});
     setOk(false);
     setSubmitError(null);
@@ -107,9 +123,9 @@ export function BookingModal() {
 
         {!ok ? (
           <form onSubmit={onSubmit} noValidate>
-            <h3 id="modal-title">{`Запись на${NBSP}бесплатный урок`}</h3>
+            <h3 id="modal-title">{`Запишитесь на${NBSP}бесплатный урок по${NBSP}скорочтению`}</h3>
             <p className="muted">
-              {`Менеджер свяжется в${NBSP}течение 15${NBSP}минут — подберём удобное время.`}
+              {`Менеджер свяжется с${NBSP}вами — подберём удобное время и${NBSP}ответим на${NBSP}вопросы`}
             </p>
 
             <div className={`form-row${errors.parent ? ' has-error' : ''}`}>
@@ -146,28 +162,34 @@ export function BookingModal() {
               {errors.email && <span className="form-error">Введите корректный e-mail</span>}
             </div>
 
-            <div className="form-grid-2">
-              <div className="form-row">
-                <label htmlFor="child">Имя ребёнка</label>
-                <input
-                  id="child" name="child" type="text"
-                  placeholder="Имя" autoComplete="off"
-                  value={values.child} onChange={onChange('child')}
-                />
-              </div>
-              <div className={`form-row${errors.age ? ' has-error' : ''}`}>
-                <label htmlFor="age">Возраст</label>
-                <select
-                  id="age" name="age" required
-                  value={values.age} onChange={onChange('age')}
-                  aria-invalid={errors.age || undefined}
-                >
-                  <option value="">Выберите</option>
-                  {ages.map((a) => <option key={a} value={a}>{a}</option>)}
-                </select>
-                {errors.age && <span className="form-error">Выберите возраст</span>}
-              </div>
+            <div className={`form-row${errors.age ? ' has-error' : ''}`}>
+              <label htmlFor="age">Возраст ребёнка</label>
+              <select
+                id="age" name="age" required
+                value={values.age} onChange={onChange('age')}
+                aria-invalid={errors.age || undefined}
+              >
+                <option value="">Выберите</option>
+                {ages.map((a) => <option key={a} value={a}>{a}</option>)}
+              </select>
+              {errors.age && <span className="form-error">Выберите возраст</span>}
             </div>
+
+            <label className={`form-consent${errors.consent ? ' has-error' : ''}`} htmlFor="consent">
+              <input
+                id="consent" name="consent" type="checkbox"
+                checked={consent} onChange={onConsentChange}
+                aria-invalid={errors.consent || undefined}
+                required
+              />
+              <span>
+                Я согласен с{NBSP}
+                <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>
+              </span>
+            </label>
+            {errors.consent && (
+              <span className="form-error" role="alert">Подтвердите согласие</span>
+            )}
 
             <button
               type="submit"
@@ -184,17 +206,12 @@ export function BookingModal() {
                 {submitError}
               </p>
             )}
-
-            <p className="form-disclaimer">
-              {`Нажимая кнопку, вы${NBSP}соглашаетесь с${NBSP}`}
-              <a href="#">политикой обработки персональных данных</a>.
-            </p>
           </form>
         ) : (
           <div className="form-success">
             <div className="check-big"><Check /></div>
-            <h3>Заявка принята!</h3>
-            <p>{`Менеджер свяжется в${NBSP}течение 15${NBSP}минут, чтобы${NBSP}подобрать удобное время.`}</p>
+            <h3>Спасибо за{NBSP}вашу регистрацию</h3>
+            <p>{`Менеджер свяжется с${NBSP}вами в${NBSP}ближайшее время, чтобы подобрать удобное время урока.`}</p>
             <button type="button" className="btn btn-primary" onClick={handleClose} style={{ marginTop: 18 }}>
               Закрыть
             </button>

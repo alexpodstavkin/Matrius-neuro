@@ -1185,6 +1185,38 @@ section { padding: clamp(56px, 6vw, 96px) 0; }
 }
 .form-disclaimer a { color: var(--primary); text-decoration: underline; }
 
+.form-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+.form-consent input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.form-consent a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.form-consent.has-error {
+  color: var(--danger, #d33);
+}
+.form-consent.has-error input[type="checkbox"] {
+  outline: 2px solid var(--danger, #d33);
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
 .btn[disabled], .btn[aria-busy="true"] {
   opacity: 0.7;
   cursor: not-allowed;
