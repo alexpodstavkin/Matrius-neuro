@@ -7,8 +7,8 @@ export function formatRussianPhone(raw: string): string {
   const d = v.slice(1);
   let out = '+7';
   if (d.length > 0) out += ' (' + d.slice(0, 3);
-  if (d.length >= 3) out += ') ' + d.slice(3, 6);
-  if (d.length >= 6) out += '-' + d.slice(6, 8);
-  if (d.length >= 8) out += '-' + d.slice(8, 10);
+  if (d.length > 3) out += ') ' + d.slice(3, 6);
+  if (d.length > 6) out += '-' + d.slice(6, 8);
+  if (d.length > 8) out += '-' + d.slice(8, 10);
   return out;
 }
