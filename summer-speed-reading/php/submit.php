@@ -45,7 +45,14 @@ function loadDotEnv(string $path): void {
         }
     }
 }
+// Сначала пробуем локальный .env (на этом лендинге его может ещё не быть),
+// потом фоллбек на .env соседа — /skorochtenie-neuro/php/.env. У него уже
+// прописаны GC_ACCOUNT и GC_SECRET_KEY для того же GetCourse-аккаунта Matrius,
+// так что нет смысла дублировать секреты в двух файлах.
+// loadDotEnv() не перезаписывает уже заданные значения, поэтому локальный .env
+// имеет приоритет — можно переопределить GC_OFFER_CODE или ALLOWED_ORIGINS.
 loadDotEnv(__DIR__ . '/.env');
+loadDotEnv(__DIR__ . '/../../skorochtenie-neuro/php/.env');
 
 require_once __DIR__ . '/getcourse.php';
 
