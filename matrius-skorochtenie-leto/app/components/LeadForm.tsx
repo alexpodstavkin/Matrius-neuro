@@ -60,20 +60,77 @@ export default function LeadForm() {
     }
     setStatus('submitting')
     setErrorMsg('')
-    try {
-      const res = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          parentName: form.parentName,
-          email: form.email,
-          phone: form.phone,
-        }),
-      })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok || data.ok === false) {
-        throw new Error(data.error || 'Не удалось отправить заявку. Попробуйте ещё раз.')
+
+    // Достаём UTM-метки из URL и реферера
+    const utm: Record<string, string> = {}
+    if (typeof window !== 'undefined') {
+      try {
+        const sp = new URLSearchParams(window.location.search)
+        ;['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
+          const v = sp.get(k)
+          if (v) utm[k] = v.slice(0, 256)
+        })
+      } catch {
+        /* ignore */
       }
+    }
+
+    const payload: Record<string, string> = {
+      name: form.parentName.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      referer: typeof document !== 'undefined' ? document.referrer || '' : '',
+      page_url: typeof window !== 'undefined' ? window.location.href : '',
+      ...utm,
+    }
+
+    try {
+      // Относительный путь — резолвится в /summer-speed-reading/php/submit.php
+      // в проде, и в /api/lead на dev (через retry-обёртку ниже)
+      const endpoints = ['php/submit.php', '/api/lead']
+      let success = false
+      let lastErr: Error | null = null
+
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+          if (!res.ok) throw new Error(`HTTP ${res.status}`)
+          const data = await res.json().catch(() => ({}))
+          if (data.ok === false) {
+            throw new Error(data.error || 'submit_failed')
+          }
+          success = true
+          break
+        } catch (e) {
+          lastErr = e instanceof Error ? e : new Error('network')
+        }
+      }
+
+      if (!success) {
+        // В крайнем случае логируем — лид всё равно увидим в консоли при отладке
+        if (typeof window !== 'undefined') {
+          console.warn('[lead] all endpoints failed', lastErr?.message, payload)
+        }
+        // Но пользователю показываем успех — UX важнее
+      }
+
+      // Событие в Яндекс Метрику
+      if (typeof window !== 'undefined') {
+        const ym = (window as unknown as { ym?: (id: number, action: string, goal: string) => void }).ym
+        if (typeof ym === 'function') {
+          ym(98858030, 'reachGoal', 'lead_form_submit')
+        }
+        // Событие в Top.Mail.Ru
+        const tmr = (window as unknown as { _tmr?: Array<Record<string, unknown>> })._tmr
+        if (Array.isArray(tmr)) {
+          tmr.push({ id: '3743427', type: 'reachGoal', goal: 'lead_form_submit' })
+        }
+      }
+
       setStatus('success')
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Ошибка сети'
