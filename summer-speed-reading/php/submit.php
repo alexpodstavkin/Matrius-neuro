@@ -143,14 +143,10 @@ if ($name === '' || $phone === '' || !filter_var($email, FILTER_VALIDATE_EMAIL))
 
 // ─────────────────────────────────────────────────────────────────────
 // 6. Сборка GC payload
+// Оффер id 8331347 — дефолт для лендинга «Лето без отупения». Можно
+// переопределить через env GC_OFFER_CODE если переедем на другой оффер.
 // ─────────────────────────────────────────────────────────────────────
-$offer = getenv('GC_OFFER_CODE') ?: '';
-if ($offer === '') {
-    leadLog('ERROR', 'missing_env', ['env' => 'GC_OFFER_CODE']);
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'server_misconfigured']);
-    exit;
-}
+$offer = getenv('GC_OFFER_CODE') ?: '8331347';
 
 $nameParts = preg_split('/\s+/', $name, 2);
 $firstName = $nameParts[0] ?? $name;

@@ -30,25 +30,56 @@ function gcCall(string $path, array $params): array {
         'params' => base64_encode($json),
     ]);
 
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $body,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_TIMEOUT        => 30,
-        CURLOPT_HTTPHEADER     => ['Accept: application/json; q=1.0, */*; q=0.1'],
-    ]);
-    $raw  = curl_exec($ch);
-    $err  = curl_error($ch);
-    $code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-    curl_close($ch);
+    // По чеклисту скилла: ретрай 5xx и сетевых таймаутов до 3 раз
+    // с экспоненциальным back-off (0.5s → 1s → 2s). 4xx — НЕ ретраим.
+    $maxAttempts = 3;
+    $attempt = 0;
+    $raw = false;
+    $lastCode = 0;
+    $lastErr = '';
 
-    if ($raw === false) {
-        throw new RuntimeException("GC network error: $err");
+    while ($attempt < $maxAttempts) {
+        $attempt++;
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => $body,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_HTTPHEADER     => ['Accept: application/json; q=1.0, */*; q=0.1'],
+        ]);
+        $raw      = curl_exec($ch);
+        $err      = curl_error($ch);
+        $errno    = curl_errno($ch);
+        $lastCode = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        curl_close($ch);
+
+        $isNetwork = ($raw === false);
+        $is5xx     = ($lastCode >= 500 && $lastCode < 600);
+
+        if (!$isNetwork && !$is5xx) {
+            // Получили ответ и это не 5xx — выходим из retry-цикла
+            break;
+        }
+
+        $lastErr = $isNetwork ? "network($errno): $err" : "http_$lastCode";
+
+        if ($attempt < $maxAttempts) {
+            // Экспоненциальный back-off: 500ms → 1000ms → 2000ms
+            usleep((int) (500000 * pow(2, $attempt - 1)));
+            continue;
+        }
+
+        // Исчерпали попытки + сетевая ошибка → 502/таймаут наверх
+        if ($isNetwork) {
+            throw new RuntimeException("GC network error after $attempt attempts: $lastErr");
+        }
     }
-    $data = json_decode($raw, true);
+
+    $data = json_decode((string) $raw, true);
     if (!is_array($data)) {
-        throw new RuntimeException("GC non-JSON ($code): " . substr($raw, 0, 500));
+        throw new RuntimeException("GC non-JSON ($lastCode): " . substr((string) $raw, 0, 500));
     }
     if (empty($data['success'])) {
         $msg = $data['result']['error_message'] ?? 'unknown';
