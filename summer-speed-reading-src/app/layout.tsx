@@ -1,14 +1,6 @@
 import type { Metadata } from 'next'
-import { Onest } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
-
-const onest = Onest({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-onest',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'Поможем ребёнку провести летние каникулы с пользой — Matrius',
@@ -18,8 +10,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={onest.variable}>
+    <html lang="ru">
       <head>
+        {/* Шрифт Onest — через CSS link (без build-time fetch) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap"
+        />
         {/* Yandex.Metrika counter — id 98858030 */}
         <Script id="yandex-metrika" strategy="afterInteractive">
           {`
