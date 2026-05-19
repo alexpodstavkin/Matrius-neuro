@@ -18,9 +18,10 @@ export default function Hero({ onCTA }: Props) {
               className="pointer-events-none absolute inset-0"
               style={{
                 backgroundImage: 'url(matrius-pattern.png)',
-                backgroundSize: '720px auto',
-                backgroundRepeat: 'repeat',
-                opacity: 0.07,
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                opacity: 0.04,
               }}
               aria-hidden
             />
