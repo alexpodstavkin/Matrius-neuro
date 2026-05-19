@@ -22,7 +22,7 @@ export default function Page() {
         </div>
       </section>
 
-      <GiftsBento />
+      <GiftsBento onCTA={openModal} />
       <BeforeAfter onCTA={openModal} />
       <BonusBlock onCTA={openModal} />
       <TrustBand />

@@ -7,36 +7,41 @@ const HERO_IMAGE =
 
 export default function Hero({ onCTA }: Props) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-stretch">
-      <div className="md:col-span-6 lg:col-span-6 flex flex-col justify-center">
-        {/* Лого + название школы */}
-        <div className="flex items-center gap-3 mb-6 md:mb-8">
-          <img
-            src="matrius-logo.png"
-            alt="Matrius"
-            className="h-14 w-14 md:h-16 md:w-16 shrink-0 rounded-full"
-          />
-          <div className="leading-tight">
-            <div className="text-navy font-bold text-lg">Matrius</div>
-            <div className="text-muted text-sm">Онлайн-школа развития детей 5–17&nbsp;лет.</div>
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6 items-stretch">
+      <div className="md:col-span-7 lg:col-span-7">
+        <div className="h-full rounded-xl bg-navy text-white p-6 md:p-10 lg:p-12 flex flex-col justify-center">
+          {/* Лого + название школы */}
+          <div className="flex items-center gap-3 mb-6 md:mb-8">
+            <img
+              src="matrius-logo.png"
+              alt="Matrius"
+              className="h-14 w-14 md:h-16 md:w-16 shrink-0 rounded-full"
+            />
+            <div className="leading-tight">
+              <div className="text-white font-bold text-lg">Matrius</div>
+              <div className="text-white/65 text-sm">Онлайн-школа развития детей 5–17&nbsp;лет.</div>
+            </div>
           </div>
-        </div>
 
-        <h1 className="h1 mb-5">
-          Доступ к&nbsp;<span className="text-orange">закрытой базе знаний</span>, которая поможет вашему ребёнку не&nbsp;потерять от&nbsp;30% школьных знаний за&nbsp;лето
-        </h1>
-        <p className="lead mb-7 max-w-2xl">
-          Чек-листы, авторские материалы и&nbsp;пошаговые образовательные инструкции общей ценностью более 150&nbsp;000&nbsp;₽. Материал, который поможет вашему ребёнку быть готовым к&nbsp;новому учебному году на&nbsp;5+
-        </p>
-        <div className="flex flex-wrap items-center gap-3">
-          <button type="button" onClick={onCTA} className="btn-primary-wide">
-            Забрать бесплатно
-          </button>
+          <h1
+            className="font-bold text-white leading-tight mb-5"
+            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.01em' }}
+          >
+            Доступ к&nbsp;<span className="text-orange">закрытой базе знаний</span>, которая поможет вашему ребёнку не&nbsp;потерять от&nbsp;30% школьных знаний за&nbsp;лето
+          </h1>
+          <p className="text-white/85 text-base md:text-lg leading-relaxed mb-7 max-w-2xl">
+            Чек-листы, авторские материалы и&nbsp;пошаговые образовательные инструкции общей ценностью более 150&nbsp;000&nbsp;₽. Материал, который поможет вашему ребёнку быть готовым к&nbsp;новому учебному году на&nbsp;5+
+          </p>
+          <div>
+            <button type="button" onClick={onCTA} className="btn-primary-wide">
+              Забрать бесплатно
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="md:col-span-6 lg:col-span-6">
-        <div className="relative h-full min-h-[260px] md:min-h-0 overflow-hidden rounded-xl shadow-card">
+      <div className="md:col-span-5 lg:col-span-5">
+        <div className="relative h-full min-h-[260px] md:min-h-0 overflow-hidden rounded-xl">
           <img
             src={HERO_IMAGE}
             alt="Ребёнок за учёбой летом"
