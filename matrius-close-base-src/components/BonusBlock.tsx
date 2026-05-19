@@ -4,8 +4,7 @@ import Reveal from './Reveal';
 
 type Props = { onCTA: () => void };
 
-const BONUS_PHOTO =
-  'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1200&q=70';
+const BONUS_PHOTO = 'bonus-student.jpg';
 
 export default function BonusBlock({ onCTA }: Props) {
   return (

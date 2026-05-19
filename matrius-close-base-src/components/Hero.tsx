@@ -4,8 +4,7 @@ import Reveal from './Reveal';
 
 type Props = { onCTA: () => void };
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=70';
+const HERO_IMAGE = 'hero-online-lesson.jpg';
 
 export default function Hero({ onCTA }: Props) {
   return (
