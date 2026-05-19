@@ -67,13 +67,12 @@ export default function BonusBlock({ onCTA }: Props) {
                 </div>
 
                 {/* Фото */}
-                <div className="relative min-h-[280px] md:min-h-0">
+                <div className="relative min-h-[280px] md:min-h-0 bg-navy">
                   <img
                     src={BONUS_PHOTO}
                     alt="Бесплатный урок с преподавателем Matrius"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-contain"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-navy/30 md:to-navy/20" />
                 </div>
               </div>
             </article>

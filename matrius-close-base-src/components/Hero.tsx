@@ -58,11 +58,11 @@ export default function Hero({ onCTA }: Props) {
       {/* Фото — скрыто на мобайле, видно от md */}
       <Reveal className="hidden md:block md:col-span-5 lg:col-span-5" delay={0.15}>
         <div className="shell h-full">
-          <div className="relative h-full overflow-hidden rounded-[26px]">
+          <div className="relative h-full overflow-hidden rounded-[26px] bg-navy">
             <img
               src={HERO_IMAGE}
               alt="Ребёнок за учёбой летом"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-contain"
             />
           </div>
         </div>
