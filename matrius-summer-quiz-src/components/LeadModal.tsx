@@ -77,13 +77,14 @@ export default function LeadModal({ open, onClose }: Props) {
           onClick={onClose}
         >
           <motion.div
-            className="card relative w-full max-w-md p-6 md:p-8"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            className="shell relative w-full max-w-md"
+            initial={{ opacity: 0, scale: 0.96, y: 20, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.96, y: 20, filter: 'blur(6px)' }}
+            transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="card-flush p-6 md:p-8 relative">
             <button
               type="button"
               onClick={onClose}
@@ -152,7 +153,7 @@ export default function LeadModal({ open, onClose }: Props) {
               </>
             ) : (
               <div className="text-center py-4">
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-orange/10 text-orange text-2xl font-bold mb-4">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange/10 text-orange text-2xl font-bold mb-4">
                   ✓
                 </div>
                 <h2 className="h2 mb-3">Спасибо!</h2>
@@ -162,6 +163,7 @@ export default function LeadModal({ open, onClose }: Props) {
                 </button>
               </div>
             )}
+            </div>
           </motion.div>
         </motion.div>
       )}

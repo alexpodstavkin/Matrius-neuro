@@ -1,5 +1,7 @@
 'use client';
 
+import Reveal from './Reveal';
+
 const BEFORE = [
   'Забыл важные правила к 1 сентября — необходимо заново учить',
   'Не прочитал ни одной книги — список из школы остался нетронутым',
@@ -25,58 +27,63 @@ export default function BeforeAfter({ onCTA }: Props) {
   return (
     <section className="relative">
       <div className="container-x section">
-        <article className="card p-6 md:p-10 lg:p-12">
-          <div className="max-w-3xl mb-8 md:mb-10">
-            <h2 className="h2">
-              Лето с&nbsp;базой знаний и&nbsp;без неё — разный старт нового учебного года для&nbsp;ребёнка
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-            {/* БЫЛО */}
-            <div className="rounded-xl bg-[#F7F7F7] border border-[#EBEBEB] p-6 md:p-7">
-              <div className="inline-flex items-center gap-2 rounded-md bg-[#EAEAEA] px-3 py-1.5 text-[12px] font-bold uppercase tracking-wide text-muted mb-6">
-                Без материалов базы
+        <Reveal>
+          <div className="shell">
+            <article className="card-flush p-6 md:p-10 lg:p-14">
+              <div className="max-w-3xl mb-10 md:mb-12">
+                <span className="eyebrow mb-4">Результат</span>
+                <h2 className="h2 mt-4">
+                  Лето с&nbsp;базой знаний и&nbsp;без неё — разный старт нового учебного года для&nbsp;ребёнка
+                </h2>
               </div>
-              <ul className="space-y-3">
-                {BEFORE.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
-                    <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#E3E3E3] text-muted text-[12px] font-bold">
-                      −
-                    </span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* СТАЛО */}
-            <div className="rounded-xl bg-orange/10 border border-orange/30 p-6 md:p-7">
-              <div className="inline-flex items-center gap-2 rounded-md bg-orange/20 px-3 py-1.5 text-[12px] font-bold uppercase tracking-wide text-orange mb-6">
-                С базой Matrius
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                {/* БЫЛО */}
+                <div className="rounded-[22px] bg-[#F4F5F8] p-6 md:p-8 ring-1 ring-black/[0.05]">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-muted mb-6 ring-1 ring-black/[0.05]">
+                    Без материалов базы
+                  </div>
+                  <ul className="space-y-3.5">
+                    {BEFORE.map((b) => (
+                      <li key={b} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
+                        <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#E0E2E8] text-muted text-[12px] font-bold">
+                          −
+                        </span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* СТАЛО */}
+                <div className="rounded-[22px] bg-orange/10 p-6 md:p-8 ring-1 ring-orange/35">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-orange/20 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-orange mb-6">
+                    С базой Matrius
+                  </div>
+                  <ul className="space-y-3.5">
+                    {AFTER.map((a) => (
+                      <li key={a} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
+                        <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange text-white text-[12px] font-bold">
+                          ✓
+                        </span>
+                        <span>{a}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <ul className="space-y-3">
-                {AFTER.map((a) => (
-                  <li key={a} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
-                    <span className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange text-white text-[12px] font-bold">
-                      ✓
-                    </span>
-                    <span>{a}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
 
-          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <button type="button" onClick={onCTA} className="btn-primary-wide">
-              Забрать бесплатно
-            </button>
-            <span className="text-sm text-muted">
-              Материалы придут на&nbsp;почту сразу после регистрации
-            </span>
+              <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <button type="button" onClick={onCTA} className="btn-primary-wide">
+                  Забрать бесплатно
+                </button>
+                <span className="text-sm text-muted">
+                  Материалы придут на&nbsp;почту сразу после регистрации
+                </span>
+              </div>
+            </article>
           </div>
-        </article>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
 'use client';
 
+import Reveal from './Reveal';
+
 type Gift = {
   title: string;
   desc: string;
@@ -51,8 +53,11 @@ type Props = { onCTA: () => void };
 
 function GiftCard({ gift }: { gift: Gift }) {
   return (
-    <div className="rounded-xl bg-[#FFE8D8] border border-[#FBD3B6] p-5 md:p-6 flex flex-col gap-2.5">
-      <h3 className="text-navy font-bold text-[17px] md:text-[18px] leading-snug">
+    <div
+      className="group rounded-[20px] bg-[#FFE8D8] p-5 md:p-6 flex flex-col gap-2.5 ring-1 ring-[#FBD3B6] transition-transform duration-500 hover:-translate-y-1"
+      style={{ transitionTimingFunction: 'cubic-bezier(0.32,0.72,0,1)' }}
+    >
+      <h3 className="text-navy font-bold text-[17px] md:text-[18px] leading-snug tracking-[-0.012em]">
         {gift.title}
       </h3>
       <p className="text-[14px] md:text-[15px] leading-relaxed text-ink/75">
@@ -66,46 +71,54 @@ export default function GiftsBento({ onCTA }: Props) {
   return (
     <section className="relative">
       <div className="container-x section">
-        <article className="card p-6 md:p-10 lg:p-12">
-          <div className="max-w-3xl mb-7 md:mb-10">
-            <h2 className="h2 mb-3">Что вы получите:</h2>
-            <p className="lead">База постоянно пополняется новыми материалами</p>
-          </div>
-
-          {/* Видимые подарки */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {GIFTS.map((g) => (
-              <GiftCard key={g.title} gift={g} />
-            ))}
-          </div>
-
-          {/* 3 скрытых подарка с blur */}
-          <div className="relative mt-4 md:mt-5">
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 select-none pointer-events-none"
-              style={{ filter: 'blur(7px)' }}
-              aria-hidden
-            >
-              {HIDDEN_GIFTS.map((g) => (
-                <GiftCard key={g.title} gift={g} />
-              ))}
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="rounded-full bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-bold text-navy shadow-card">
-                Ещё материалы откроются после регистрации
+        <Reveal>
+          <div className="shell">
+            <article className="card-flush p-6 md:p-10 lg:p-14">
+              <div className="max-w-3xl mb-8 md:mb-12">
+                <span className="eyebrow mb-4">Что внутри</span>
+                <h2 className="h2 mt-4 mb-3">Что вы получите:</h2>
+                <p className="lead">База постоянно пополняется новыми материалами</p>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <button type="button" onClick={onCTA} className="btn-primary-wide">
-              Забрать бесплатно
-            </button>
-            <span className="text-sm text-muted">
-              Все материалы — на&nbsp;почту после регистрации
-            </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {GIFTS.map((g, i) => (
+                  <Reveal key={g.title} delay={0.06 * i}>
+                    <GiftCard gift={g} />
+                  </Reveal>
+                ))}
+              </div>
+
+              {/* 3 скрытых */}
+              <div className="relative mt-4 md:mt-5">
+                <div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 select-none pointer-events-none"
+                  style={{ filter: 'blur(7px)' }}
+                  aria-hidden
+                >
+                  {HIDDEN_GIFTS.map((g) => (
+                    <GiftCard key={g.title} gift={g} />
+                  ))}
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="rounded-full bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-bold text-navy shadow-[0_18px_36px_-18px_rgba(31,42,68,0.30)] ring-1 ring-black/5">
+                    Ещё материалы откроются после регистрации
+                  </div>
+                </div>
+              </div>
+
+              <Reveal delay={0.1}>
+                <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <button type="button" onClick={onCTA} className="btn-primary-wide">
+                    Забрать бесплатно
+                  </button>
+                  <span className="text-sm text-muted">
+                    Все материалы — на&nbsp;почту после регистрации
+                  </span>
+                </div>
+              </Reveal>
+            </article>
           </div>
-        </article>
+        </Reveal>
       </div>
     </section>
   );
