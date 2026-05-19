@@ -14,6 +14,17 @@ export default function BonusBlock({ onCTA }: Props) {
         <Reveal>
           <div className="shell">
             <article className="relative overflow-hidden rounded-[26px] bg-navy text-white dark-inner">
+              {/* Pattern background — almost invisible */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  backgroundImage: 'url(matrius-pattern.png)',
+                  backgroundSize: '720px auto',
+                  backgroundRepeat: 'repeat',
+                  opacity: 0.07,
+                }}
+                aria-hidden
+              />
               <div
                 className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-orange/25 blur-3xl"
                 aria-hidden
@@ -36,7 +47,7 @@ export default function BonusBlock({ onCTA }: Props) {
                     <span className="text-orange">Бесплатный урок</span> по&nbsp;любому направлению онлайн-школы Matrius
                   </h2>
                   <p className="text-white/85 text-base md:text-lg leading-relaxed mb-6">
-                    Всем, кто получит доступ к&nbsp;базе знаний — бесплатный диагностический урок 60&nbsp;минут онлайн. Ребёнок раскроет свои сильные стороны, а&nbsp;вы получите пошаговый план развития от&nbsp;преподавателя.
+                    Всем, кто получит доступ к&nbsp;базе знаний — дарим бесплатный диагностический урок 60&nbsp;минут онлайн. Ребёнок раскроет свои сильные стороны, а&nbsp;вы получите пошаговый план развития от&nbsp;преподавателя.
                   </p>
 
                   <div className="rounded-[18px] bg-white/[0.08] backdrop-blur border border-white/15 p-4 md:p-5 mb-7">

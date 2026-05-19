@@ -11,6 +11,17 @@ export default function CTASection({ onCTA }: Props) {
         <Reveal>
           <div className="shell">
             <article className="dark-inner relative overflow-hidden rounded-[26px] bg-navy text-white p-8 md:p-14 lg:p-20 text-center flex flex-col items-center">
+              {/* Pattern background — almost invisible */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  backgroundImage: 'url(matrius-pattern.png)',
+                  backgroundSize: '720px auto',
+                  backgroundRepeat: 'repeat',
+                  opacity: 0.07,
+                }}
+                aria-hidden
+              />
               <div
                 className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-orange/20 blur-3xl"
                 aria-hidden

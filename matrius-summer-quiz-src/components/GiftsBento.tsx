@@ -76,7 +76,7 @@ export default function GiftsBento({ onCTA }: Props) {
             <article className="card-flush p-6 md:p-10 lg:p-14">
               <div className="max-w-3xl mb-8 md:mb-12">
                 <h2 className="h2 mb-3">Что вы получите:</h2>
-                <p className="lead">База постоянно пополняется новыми материалами</p>
+                <p className="lead">База постоянно пополняется новыми материалами, которые будут актуальны летом и&nbsp;весь учебный год</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -100,7 +100,7 @@ export default function GiftsBento({ onCTA }: Props) {
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="rounded-full bg-white/90 backdrop-blur px-5 py-2.5 text-sm font-bold text-navy shadow-[0_18px_36px_-18px_rgba(31,42,68,0.30)] ring-1 ring-black/5">
-                    Ещё материалы откроются после регистрации
+                    Откроются после регистрации
                   </div>
                 </div>
               </div>
