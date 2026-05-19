@@ -38,7 +38,7 @@ export default function CTASection({ onCTA }: Props) {
                 Доступ к&nbsp;<span className="text-orange">закрытой базе знаний</span>, которая поможет вашему ребёнку не&nbsp;потерять от&nbsp;30% школьных знаний за&nbsp;лето
               </h2>
               <p className="relative text-white/85 text-base md:text-lg leading-relaxed mb-8 max-w-2xl">
-                Чек-листы, авторские материалы и&nbsp;пошаговые образовательные инструкции общей ценностью более 150&nbsp;000&nbsp;₽. Материал, который поможет вашему ребёнку быть готовым к&nbsp;новому учебному году на&nbsp;5+
+                Чек-листы, авторские материалы и&nbsp;пошаговые образовательные инструкции общей ценностью более 150&nbsp;000&nbsp;₽. Материалы, которые помогут вашему ребёнку быть готовым к&nbsp;новому учебному году на&nbsp;5+
               </p>
               <div className="relative">
                 <button type="button" onClick={onCTA} className="btn-primary-wide">
