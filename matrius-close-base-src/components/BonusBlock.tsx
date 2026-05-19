@@ -72,7 +72,6 @@ export default function BonusBlock({ onCTA }: Props) {
                     src={BONUS_PHOTO}
                     alt="Бесплатный урок с преподавателем Matrius"
                     className="absolute inset-0 h-full w-full object-cover"
-                    style={{ transform: 'scale(0.92)' }}
                   />
                 </div>
               </div>
