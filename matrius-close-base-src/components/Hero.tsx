@@ -62,7 +62,8 @@ export default function Hero({ onCTA }: Props) {
             <img
               src={HERO_IMAGE}
               alt="Ребёнок за учёбой летом"
-              className="absolute inset-0 h-full w-full object-contain"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ transform: 'scale(0.92)' }}
             />
           </div>
         </div>
