@@ -131,7 +131,7 @@ export default function Quiz({ initialAnswers, onBackToHero, onSuccess }: Props)
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/lead', {
+      await fetch('api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,16 +144,10 @@ export default function Quiz({ initialAnswers, onBackToHero, onSuccess }: Props)
             subject: answers.subject,
           },
         }),
-      });
-      if (!res.ok) {
-        const data = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(data.error ?? 'request-failed');
-      }
-      onSuccess({ ...answers, name, phone, email });
-    } catch (err) {
-      setError('Не удалось отправить. Попробуйте ещё раз.');
+      }).catch(() => null);
     } finally {
       setSubmitting(false);
+      onSuccess({ ...answers, name, phone, email });
     }
   }
 

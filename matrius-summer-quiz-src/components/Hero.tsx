@@ -12,7 +12,7 @@ export default function Hero({ onStart }: Props) {
         {/* Лого + название школы */}
         <div className="flex items-center gap-3 mb-6 md:mb-8">
           <img
-            src="/matrius-logo.png"
+            src="matrius-logo.png"
             alt="Matrius"
             className="h-14 w-14 md:h-16 md:w-16 shrink-0 rounded-full"
           />
