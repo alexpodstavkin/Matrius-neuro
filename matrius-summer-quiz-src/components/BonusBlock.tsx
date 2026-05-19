@@ -33,7 +33,7 @@ export default function BonusBlock({ onCTA }: Props) {
                     className="font-bold text-white leading-[1.05] tracking-[-0.018em] mb-5"
                     style={{ fontSize: 'clamp(1.625rem, 3vw, 2.5rem)' }}
                   >
-                    Бесплатный урок по&nbsp;любому направлению онлайн-школы Matrius
+                    <span className="text-orange">Бесплатный урок</span> по&nbsp;любому направлению онлайн-школы Matrius
                   </h2>
                   <p className="text-white/85 text-base md:text-lg leading-relaxed mb-6">
                     Всем, кто получит доступ к&nbsp;базе знаний — бесплатный диагностический урок 60&nbsp;минут онлайн. Ребёнок раскроет свои сильные стороны, а&nbsp;вы получите пошаговый план развития от&nbsp;преподавателя.
@@ -48,7 +48,7 @@ export default function BonusBlock({ onCTA }: Props) {
                     </p>
                   </div>
 
-                  <div>
+                  <div className="flex justify-center md:justify-start">
                     <button type="button" onClick={onCTA} className="btn-primary-wide">
                       Забрать бесплатно
                     </button>

@@ -19,6 +19,12 @@ const AFTER = [
   'Увеличил скорость чтения с 70 до 200 слов в минуту',
   'Прокачал концентрацию — удерживает внимание на уроке весь академический час',
   'Привык заниматься 15 минут в день — учебный год начался без стресса',
+  'Восстановил почерк — учителя отмечают аккуратность тетради',
+  'Уверенно отвечает у доски — больше не теряется перед классом',
+  'Запомнил таблицу умножения и формулы — счёт в уме стал быстрее',
+  'Освоил приёмы запоминания — учит стихи за 20 минут вместо часа',
+  'Сократил время на домашку в 2 раза — освободилось время на хобби',
+  'Вернул интерес к учёбе — сам предлагает «давай позанимаемся ещё»',
 ];
 
 type Props = { onCTA: () => void };
@@ -31,9 +37,8 @@ export default function BeforeAfter({ onCTA }: Props) {
           <div className="shell">
             <article className="card-flush p-6 md:p-10 lg:p-14">
               <div className="max-w-3xl mb-10 md:mb-12">
-                <span className="eyebrow mb-4">Результат</span>
-                <h2 className="h2 mt-4">
-                  Лето с&nbsp;базой знаний и&nbsp;без неё — разный старт нового учебного года для&nbsp;ребёнка
+                <h2 className="h2">
+                  <span className="text-orange">Лето с&nbsp;базой знаний и&nbsp;без неё</span> — разный старт нового учебного года для&nbsp;ребёнка
                 </h2>
               </div>
 
@@ -58,7 +63,7 @@ export default function BeforeAfter({ onCTA }: Props) {
                 {/* СТАЛО */}
                 <div className="rounded-[22px] bg-orange/10 p-6 md:p-8 ring-1 ring-orange/35">
                   <div className="inline-flex items-center gap-2 rounded-full bg-orange/20 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-orange mb-6">
-                    С базой Matrius
+                    С базой знаний
                   </div>
                   <ul className="space-y-3.5">
                     {AFTER.map((a) => (
@@ -73,13 +78,10 @@ export default function BeforeAfter({ onCTA }: Props) {
                 </div>
               </div>
 
-              <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="mt-10 md:mt-12 flex justify-center">
                 <button type="button" onClick={onCTA} className="btn-primary-wide">
                   Забрать бесплатно
                 </button>
-                <span className="text-sm text-muted">
-                  Материалы придут на&nbsp;почту сразу после регистрации
-                </span>
               </div>
             </article>
           </div>

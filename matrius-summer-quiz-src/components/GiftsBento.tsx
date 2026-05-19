@@ -30,7 +30,7 @@ const GIFTS: Gift[] = [
   },
   {
     title: '5 упражнений на концентрацию',
-    desc: 'Игры на внимание и фокус — чтобы ребёнок не залипал в телефоне, а спокойно учился.',
+    desc: 'Игры на внимание и фокус — чтобы ребёнок не сидел 6–8 часов в телефоне, а спокойно учился.',
   },
 ];
 
@@ -75,8 +75,7 @@ export default function GiftsBento({ onCTA }: Props) {
           <div className="shell">
             <article className="card-flush p-6 md:p-10 lg:p-14">
               <div className="max-w-3xl mb-8 md:mb-12">
-                <span className="eyebrow mb-4">Что внутри</span>
-                <h2 className="h2 mt-4 mb-3">Что вы получите:</h2>
+                <h2 className="h2 mb-3">Что вы получите:</h2>
                 <p className="lead">База постоянно пополняется новыми материалами</p>
               </div>
 
@@ -107,13 +106,10 @@ export default function GiftsBento({ onCTA }: Props) {
               </div>
 
               <Reveal delay={0.1}>
-                <div className="mt-10 md:mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="mt-10 md:mt-12 flex justify-center">
                   <button type="button" onClick={onCTA} className="btn-primary-wide">
                     Забрать бесплатно
                   </button>
-                  <span className="text-sm text-muted">
-                    Все материалы — на&nbsp;почту после регистрации
-                  </span>
                 </div>
               </Reveal>
             </article>

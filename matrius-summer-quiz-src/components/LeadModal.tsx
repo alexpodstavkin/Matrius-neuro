@@ -96,10 +96,7 @@ export default function LeadModal({ open, onClose }: Props) {
 
             {!success ? (
               <>
-                <h2 className="h2 mb-2">Забрать базу знаний</h2>
-                <p className="lead mb-5 text-[15px]">
-                  Заполните контакты — пришлём материалы для&nbsp;вашего ребёнка на&nbsp;почту
-                </p>
+                <h2 className="h2 mb-5">Доступ к&nbsp;<span className="text-orange">закрытой базе знаний</span></h2>
                 <form onSubmit={submit} className="space-y-4">
                   <label className="block">
                     <span className="block text-sm font-semibold text-navy mb-1.5">Имя родителя</span>

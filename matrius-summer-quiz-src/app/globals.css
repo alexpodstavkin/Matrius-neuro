@@ -23,7 +23,7 @@ html, body {
     @apply w-full px-4 md:px-6 lg:px-8;
   }
   .section {
-    @apply py-14 md:py-20 lg:py-28;
+    @apply py-7 md:py-10 lg:py-14;
   }
   .h1 {
     font-size: clamp(2rem, 4.5vw, 3.75rem);

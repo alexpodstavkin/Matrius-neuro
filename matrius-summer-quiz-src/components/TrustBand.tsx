@@ -31,8 +31,7 @@ export default function TrustBand() {
           <div className="shell">
             <article className="card-flush p-6 md:p-10 lg:p-14">
               <div className="max-w-3xl mb-10 md:mb-12">
-                <span className="eyebrow mb-4">Доверие</span>
-                <h2 className="h2 mt-4">Почему родители выбирают онлайн-школу Matrius</h2>
+                <h2 className="h2">Почему родители выбирают онлайн-школу Matrius</h2>
               </div>
 
               {/* Stats */}
