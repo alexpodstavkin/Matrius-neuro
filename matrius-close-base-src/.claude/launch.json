@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "matrius-summer-quiz",
+      "name": "matrius-close-base",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3035
