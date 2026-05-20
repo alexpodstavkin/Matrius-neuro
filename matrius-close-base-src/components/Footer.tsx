@@ -80,8 +80,8 @@ export default function Footer() {
             <div>ИНН 1840120295 · КПП 184001001 · ОГРН 1231800007670 · ОКВЭД 85.41.9</div>
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-1 md:justify-end">
-            <a href="#" className="hover:opacity-80 transition-opacity">Политика конфиденциальности</a>
-            <a href="#" className="hover:opacity-80 transition-opacity">Договор оферты</a>
+            <a href="https://matrius.online/privacypolicy" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity">Политика конфиденциальности</a>
+            <a href="https://matrius.online/publicofertamatrius" target="_blank" rel="noreferrer" className="hover:opacity-80 transition-opacity">Договор оферты</a>
           </div>
         </div>
       </div>
