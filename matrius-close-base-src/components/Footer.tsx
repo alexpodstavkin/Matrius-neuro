@@ -10,9 +10,8 @@ export default function Footer() {
                 alt="Matrius"
                 className="h-12 w-12 shrink-0 rounded-full bg-white"
               />
-              <div className="leading-tight">
-                <div className="font-bold text-xl">Matrius</div>
-                <div className="text-white/65 text-xs">Онлайн-школа для&nbsp;детей и&nbsp;подростков</div>
+              <div className="leading-snug text-white/75 text-sm font-medium">
+                Онлайн-школа развития детей 5–17&nbsp;лет
               </div>
             </div>
             <p className="text-white/70 text-sm leading-relaxed max-w-md mb-5">

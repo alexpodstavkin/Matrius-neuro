@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Hero from '@/components/Hero';
 import GiftsBento from '@/components/GiftsBento';
 import BeforeAfter from '@/components/BeforeAfter';
-import BonusBlock from '@/components/BonusBlock';
 import TrustBand from '@/components/TrustBand';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
@@ -24,7 +23,6 @@ export default function Page() {
 
       <GiftsBento onCTA={openModal} />
       <BeforeAfter onCTA={openModal} />
-      <BonusBlock onCTA={openModal} />
       <TrustBand />
       <CTASection onCTA={openModal} />
       <Footer />

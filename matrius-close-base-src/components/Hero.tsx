@@ -31,9 +31,8 @@ export default function Hero({ onCTA }: Props) {
                 alt="Matrius"
                 className="h-14 w-14 md:h-16 md:w-16 shrink-0 rounded-full"
               />
-              <div className="leading-tight">
-                <div className="text-white font-bold text-lg">Matrius</div>
-                <div className="text-white/65 text-sm">Онлайн-школа развития детей 5–17&nbsp;лет.</div>
+              <div className="leading-snug text-white/70 text-sm font-medium">
+                Онлайн-школа развития детей<br />5–17&nbsp;лет
               </div>
             </div>
 
