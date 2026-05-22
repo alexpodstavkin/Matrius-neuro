@@ -64,10 +64,12 @@ export default function CTAForm() {
       utms = JSON.parse(sessionStorage.getItem('mx_utm') || '{}')
     } catch {}
 
-    // По умолчанию — PHP-обработчик рядом с лендингом /matrius-summer-school/php/submit.php
-    // Можно переопределить через NEXT_PUBLIC_LEAD_ENDPOINT (Cloudflare Worker и т.п.)
+    // По умолчанию — рабочий PHP-обработчик соседнего проекта на том же домене
+    // (web.matrius.online/skorochtenie-neuro/php/submit.php), у него уже настроены
+    // GC_ACCOUNT / GC_SECRET_KEY / GC_OFFER_CODE в .env на сервере.
+    // Можно переопределить через NEXT_PUBLIC_LEAD_ENDPOINT.
     const endpoint =
-      process.env.NEXT_PUBLIC_LEAD_ENDPOINT || 'php/submit.php'
+      process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '/skorochtenie-neuro/php/submit.php'
 
     const payload: Record<string, string> = {
       name: name.trim(),
@@ -76,6 +78,8 @@ export default function CTAForm() {
       age: `${childAge} лет`,
       ...utms,
     }
+    // Помечаем источник, если utm_source не пришёл — чтобы отличать в GC от skorochtenie-neuro
+    if (!payload.utm_source) payload.utm_source = 'matrius-summer-school'
     if (typeof document !== 'undefined' && document.referrer) {
       payload.referer = document.referrer
     }
