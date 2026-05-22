@@ -36,7 +36,6 @@ export default function CTAForm() {
     setStatus('loading')
     setErrorMsg('')
 
-    // Простая клиентская валидация
     const digits = phone.replace(/\D/g, '')
     if (!name.trim()) {
       setStatus('error')
@@ -53,24 +52,52 @@ export default function CTAForm() {
       setErrorMsg('Укажите корректную почту')
       return
     }
+    if (!childAge || Number(childAge) < 5 || Number(childAge) > 17) {
+      setStatus('error')
+      setErrorMsg('Укажите возраст ребёнка (5–17)')
+      return
+    }
 
-    // Endpoint можно подменить через NEXT_PUBLIC_LEAD_ENDPOINT (например, GetCourse widget URL
-    // или прокси-handler), который принимает форм-data. Иначе отправка делается на /lead — заглушка.
-    const endpoint = process.env.NEXT_PUBLIC_LEAD_ENDPOINT
+    // UTM-метки из sessionStorage (сохранены при первой загрузке)
+    let utms: Record<string, string> = {}
     try {
-      if (endpoint) {
-        const formData = new FormData()
-        formData.append('name', name)
-        formData.append('phone', `+${digits}`)
-        formData.append('email', email)
-        formData.append('child_age', childAge)
-        formData.append('source', 'Matrius — Лето / Скорочтение (лендинг)')
-        await fetch(endpoint, { method: 'POST', body: formData, mode: 'no-cors' })
+      utms = JSON.parse(sessionStorage.getItem('mx_utm') || '{}')
+    } catch {}
+
+    // По умолчанию — PHP-обработчик рядом с лендингом /matrius-summer-school/php/submit.php
+    // Можно переопределить через NEXT_PUBLIC_LEAD_ENDPOINT (Cloudflare Worker и т.п.)
+    const endpoint =
+      process.env.NEXT_PUBLIC_LEAD_ENDPOINT || 'php/submit.php'
+
+    const payload: Record<string, string> = {
+      name: name.trim(),
+      phone: `+${digits}`,
+      email: email.trim(),
+      age: `${childAge} лет`,
+      ...utms,
+    }
+    if (typeof document !== 'undefined' && document.referrer) {
+      payload.referer = document.referrer
+    }
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok || res.status === 202) {
+        setStatus('success')
+        return
       }
-      setStatus('success')
+      const data = await res.json().catch(() => ({}))
+      setStatus('error')
+      if (res.status === 422) setErrorMsg('Проверьте правильность email и телефона.')
+      else if (res.status === 429) setErrorMsg('Слишком много заявок. Попробуйте через минуту.')
+      else setErrorMsg(data.error || 'Не удалось отправить заявку. Попробуйте ещё раз.')
     } catch {
-      // даже при no-cors fetch всегда резолвится, но на всякий случай
-      setStatus('success')
+      setStatus('error')
+      setErrorMsg('Сеть недоступна. Попробуйте ещё раз.')
     }
   }
 
