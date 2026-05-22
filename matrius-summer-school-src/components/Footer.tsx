@@ -6,7 +6,7 @@ export default function Footer() {
           <div className="md:col-span-5">
             <div className="flex items-center gap-3 mb-5">
               <img
-                src="/matrius-logo.png"
+                src="matrius-logo.png"
                 alt="Matrius"
                 className="h-12 w-12 shrink-0 rounded-full bg-white"
               />

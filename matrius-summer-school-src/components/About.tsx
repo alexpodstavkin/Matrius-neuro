@@ -27,7 +27,7 @@ function Cell({
   return (
     <Reveal className={className}>
       <img
-        src={`/why-cell-${id}.png`}
+        src={`why-cell-${id}.png`}
         alt={alt}
         className="block w-full h-full object-contain rounded-[22px]"
         style={{ aspectRatio: ASPECT[id] }}

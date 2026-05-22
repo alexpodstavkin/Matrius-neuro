@@ -66,7 +66,7 @@ export default function Diagnostic() {
                 <div className="hidden md:flex md:col-span-5 items-stretch p-4 md:p-6 lg:p-7">
                   <div className="relative w-full overflow-hidden rounded-[20px]">
                     <img
-                      src="/diagnostic-photo.jpg"
+                      src="diagnostic-photo.jpg"
                       alt="Ребёнок занимается на бесплатной диагностике чтения Matrius"
                       className="absolute inset-0 h-full w-full object-cover object-center"
                     />

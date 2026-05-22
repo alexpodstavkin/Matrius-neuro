@@ -35,7 +35,7 @@ export default function Hero() {
               <div
                 className="pointer-events-none absolute inset-0 hidden md:block"
                 style={{
-                  backgroundImage: 'url(/matrius-pattern.png)',
+                  backgroundImage: 'url(matrius-pattern.png)',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center',
@@ -66,7 +66,7 @@ export default function Hero() {
                   {/* Лого + подпись */}
                   <div className="flex items-center gap-3 mb-6 md:mb-7">
                     <img
-                      src="/matrius-logo.png"
+                      src="matrius-logo.png"
                       alt="Matrius"
                       className="h-12 w-12 md:h-14 md:w-14 shrink-0 rounded-full bg-white"
                     />
@@ -143,7 +143,7 @@ export default function Hero() {
                 {/* RIGHT — фото без фона, вписанное в navy ячейку */}
                 <div className="hidden md:block md:col-span-5 relative">
                   <img
-                    src="/hero-online-lesson.png"
+                    src="hero-online-lesson.png"
                     alt="Ребёнок за чтением"
                     className="absolute inset-0 h-full w-full object-contain object-bottom"
                   />
