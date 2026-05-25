@@ -49,7 +49,7 @@ export default function ArtemCase({ onCTA }: Props) {
                 <Reveal className="md:col-span-5 lg:col-span-4" delay={0.08}>
                   <div className="relative aspect-[4/5] rounded-[22px] overflow-hidden bg-navy-light ring-1 ring-white/10">
                     <img
-                      src="/cases/artem.jpg"
+                      src="cases/artem.jpg"
                       alt="Артём, 2 класс, ученик Matrius"
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover"

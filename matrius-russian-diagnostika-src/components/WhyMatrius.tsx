@@ -15,35 +15,35 @@ type Feature = {
 
 const FEATURES: Feature[] = [
   {
-    image: '/why-matrius/platform.png',
+    image: 'why-matrius/platform.png',
     alt: 'Собственная игровая платформа Matrius',
     span: 'lg:col-span-2',
     ratio: 'aspect-[1814/532]',
     hideOnMobile: true,
   },
   {
-    image: '/why-matrius/stats.png',
+    image: 'why-matrius/stats.png',
     alt: '7+ лет на рынке, 50 000+ учеников',
     ratio: 'aspect-[922/532]',
   },
   {
-    image: '/why-matrius/license.png',
+    image: 'why-matrius/license.png',
     alt: 'Образовательная лицензия и резидентство в Сколково',
     span: 'lg:row-span-2',
     ratio: 'aspect-[922/1100]',
   },
   {
-    image: '/why-matrius/motivation.png',
+    image: 'why-matrius/motivation.png',
     alt: 'Поддержка интереса и мотивации',
     ratio: 'aspect-[922/560]',
   },
   {
-    image: '/why-matrius/teachers.png',
+    image: 'why-matrius/teachers.png',
     alt: 'Индивидуальный подбор преподавателей',
     ratio: 'aspect-[844/560]',
   },
   {
-    image: '/why-matrius/series.png',
+    image: 'why-matrius/series.png',
     alt: 'Собственный мультсериал Matrius',
     span: 'lg:col-span-2',
     ratio: 'aspect-[1814/494]',
