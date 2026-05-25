@@ -4,8 +4,8 @@ const isProd = process.env.NODE_ENV === 'production';
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: isProd ? '/matrius-close-base' : '',
-  assetPrefix: isProd ? '/matrius-close-base/' : '',
+  basePath: isProd ? '/matrius-russian-diagnostika' : '',
+  assetPrefix: isProd ? '/matrius-russian-diagnostika/' : '',
   images: { unoptimized: true },
 };
 export default nextConfig;

@@ -26,11 +26,16 @@ type Props = {
   onSuccess?: () => void;
 };
 
+const LEAD_ENDPOINT =
+  process.env.NEXT_PUBLIC_LEAD_ENDPOINT ||
+  '/matrius-russian-diagnostika/php/submit.php';
+
 export default function LeadForm({ variant = 'light', submitLabel = 'Записаться', onSuccess }: Props) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [childAge, setChildAge] = useState('');
+  const [company, setCompany] = useState(''); // honeypot
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,19 +67,34 @@ export default function LeadForm({ variant = 'light', submitLabel = 'Запис�
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/lead', {
+      // utm-метки и referer из браузера, передаём PHP-обработчику
+      const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+      const utm: Record<string, string> = {};
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
+        const v = params.get(k);
+        if (v) utm[k] = v;
+      });
+      if (typeof document !== 'undefined' && document.referrer) {
+        utm['referer'] = document.referrer;
+      }
+
+      const res = await fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          parentName: n,
+          name: n,
           phone: p,
           email: em,
-          childAge: age,
+          age: String(age),
+          company, // honeypot — на бэке если не пустой → 202 silent
+          ...utm,
         }),
       });
       const data = await res.json().catch(() => ({ ok: false }));
       if (!res.ok || !data.ok) {
-        setError(data.error || 'Не удалось отправить. Попробуйте ещё раз.');
+        setError(data.error === 'validation_failed'
+          ? 'Проверьте поля и попробуйте ещё раз.'
+          : 'Не удалось отправить. Попробуйте ещё раз.');
         return;
       }
       setSuccess(true);
@@ -113,6 +133,17 @@ export default function LeadForm({ variant = 'light', submitLabel = 'Запис�
 
   return (
     <form onSubmit={submit} className="space-y-4" noValidate>
+      {/* Honeypot — невидимое для людей поле, ловит ботов */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      />
       <label className="block">
         <span className={labelClass}>Имя родителя</span>
         <input
