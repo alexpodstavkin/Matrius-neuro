@@ -26,12 +26,9 @@ type Props = {
   onSuccess?: () => void;
 };
 
-// PHP-обработчик лежит в /skorochtenie-neuro/php/ — там настроен nginx + PHP-FPM,
-// есть рабочий .env с GC-ключами. Файл submit-russian.php отвечает за оффер 8408464
-// (диагностика русского 1-4 класса) и наш источник лида.
 const LEAD_ENDPOINT =
   process.env.NEXT_PUBLIC_LEAD_ENDPOINT ||
-  '/skorochtenie-neuro/php/submit-russian.php';
+  '/matrius-russian-diagnostika/php/submit.php';
 
 export default function LeadForm({ variant = 'light', submitLabel = 'Записаться', onSuccess }: Props) {
   const [name, setName] = useState('');
