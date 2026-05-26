@@ -70,12 +70,6 @@ class BookingPayload(BaseModel):
     age: str = Field(min_length=1, max_length=64)
     child: str | None = Field(default=None, max_length=120)
 
-    # Опциональный override оффера: если лендинг передал свой offer_code,
-    # используем его, иначе берётся общий GC_OFFER_CODE из env.
-    # Формат — те же символы, что GC принимает в API: цифры/латиница/_-.
-    # Backward compatible: skorochtenie и summer-school поле не передают.
-    offer_code: str | None = Field(default=None, pattern=r"^[A-Za-z0-9_\-]{1,32}$")
-
     referer: str | None = None
     utm_source: str | None = None
     utm_medium: str | None = None
@@ -176,11 +170,8 @@ def _send_to_gc(payload: BookingPayload, request_referer: str | None) -> None:
         "utm_term_c":     payload.utm_term     or "no-detected",
     }
 
-    # offer_code: payload (override) > GC_OFFER_CODE из env (общий дефолт)
-    offer_code = payload.offer_code or GC_OFFER_CODE
-
     deal = {
-        "offer_code": offer_code,
+        "offer_code": GC_OFFER_CODE,
         "deal_status": "Новый",
         "deal_cost": "1",
         "deal_comment": "\n".join(note_lines),
