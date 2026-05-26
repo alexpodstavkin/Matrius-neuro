@@ -1,15 +1,12 @@
 'use client';
 
+import Masonry from 'react-masonry-css';
 import Reveal from './Reveal';
 
 type Feature = {
   image: string;
   alt: string;
-  /** bento span на lg-сетке (по умолчанию 1×1) */
-  span?: string;
-  /** object-position для object-cover (где текст и важный объект скрина) */
-  position?: string;
-  /** скрыть на мобиле (sm и ниже) */
+  /** скрыть на мобиле (sm и ниже) — для широких скринов которые мелко выглядят в 1 колонку */
   hideOnMobile?: boolean;
 };
 
@@ -17,55 +14,54 @@ const FEATURES: Feature[] = [
   {
     image: 'why-matrius/platform.png',
     alt: 'Собственная игровая платформа Matrius',
-    span: 'lg:col-span-2',
-    position: 'left center',
     hideOnMobile: true,
   },
   {
     image: 'why-matrius/stats.png',
     alt: '7+ лет на рынке, 50 000+ учеников',
-    position: 'left center',
   },
   {
     image: 'why-matrius/license.png',
     alt: 'Образовательная лицензия и резидентство в Сколково',
-    span: 'lg:row-span-2',
-    position: 'center top',
   },
   {
     image: 'why-matrius/motivation.png',
     alt: 'Поддержка интереса и мотивации',
-    position: 'left center',
   },
   {
     image: 'why-matrius/teachers.png',
     alt: 'Индивидуальный подбор преподавателей',
-    position: 'left center',
   },
   {
     image: 'why-matrius/series.png',
     alt: 'Собственный мультсериал Matrius',
-    span: 'lg:col-span-2',
-    position: 'left center',
     hideOnMobile: true,
   },
 ];
 
+// Адаптивные колонки: на ≥1024 — 3, ≥640 — 2, иначе — 1
+const BREAKPOINT_COLS = {
+  default: 3,
+  1023: 2,
+  639: 1,
+};
+
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
-    <div className="rounded-[22px] overflow-hidden md:aspect-[4/3] lg:aspect-auto md:h-full shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white">
+    <div className="rounded-[22px] overflow-hidden shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white">
       <img
         src={feature.image}
         alt={feature.alt}
         loading="lazy"
-        className="block w-full h-auto md:h-full md:w-full md:object-cover"
-        style={{ objectPosition: feature.position ?? 'center' }}
+        className="block w-full h-auto"
       />
     </div>
   );
 }
 
 export default function WhyMatrius() {
+  const visibleFeatures = FEATURES.filter((f) => true); // на мобиле фильтруется CSS-ом ниже
+
   return (
     <section className="relative">
       <div className="container-x section">
@@ -78,18 +74,22 @@ export default function WhyMatrius() {
                 </h2>
               </div>
 
-              {/* Bento — 3 кол на lg, фикс auto-rows под широкие 2-кол скрины (≈2.5:1) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7 lg:grid-flow-dense lg:[grid-auto-rows:10rem] xl:[grid-auto-rows:12rem] 2xl:[grid-auto-rows:14rem]">
-                {FEATURES.map((f, i) => (
-                  <Reveal
+              <Masonry
+                breakpointCols={BREAKPOINT_COLS}
+                className="masonry-grid"
+                columnClassName="masonry-grid_column"
+              >
+                {visibleFeatures.map((f, i) => (
+                  <div
                     key={f.image}
-                    delay={0.05 * i}
-                    className={`${f.hideOnMobile ? 'hidden sm:block' : ''} ${f.span ?? ''}`.trim()}
+                    className={f.hideOnMobile ? 'hidden sm:block' : ''}
                   >
-                    <FeatureCard feature={f} />
-                  </Reveal>
+                    <Reveal delay={0.05 * i}>
+                      <FeatureCard feature={f} />
+                    </Reveal>
+                  </div>
                 ))}
-              </div>
+              </Masonry>
             </article>
           </div>
         </Reveal>

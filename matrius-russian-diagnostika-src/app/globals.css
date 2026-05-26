@@ -219,3 +219,22 @@ input, select, textarea {
 /* native details/summary */
 details > summary { list-style: none; cursor: pointer; }
 details > summary::-webkit-details-marker { display: none; }
+
+/* react-masonry-css — динамический masonry для блока WhyMatrius */
+.masonry-grid {
+  display: flex;
+  margin-left: -20px; /* компенсируем padding-left у колонок */
+  width: auto;
+}
+.masonry-grid_column {
+  padding-left: 20px;
+  background-clip: padding-box;
+}
+.masonry-grid_column > div {
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .masonry-grid { margin-left: -28px; }
+  .masonry-grid_column { padding-left: 28px; }
+  .masonry-grid_column > div { margin-bottom: 28px; }
+}
