@@ -1,8 +1,0 @@
-# Запрет прямого доступа к .env, getcourse.php и логам
-<FilesMatch "^(\.env|getcourse\.php|README\.md)$">
-    Require all denied
-</FilesMatch>
-
-<DirectoryMatch "logs">
-    Require all denied
-</DirectoryMatch>

@@ -26,9 +26,10 @@ type Props = {
   onSuccess?: () => void;
 };
 
-const LEAD_ENDPOINT =
-  process.env.NEXT_PUBLIC_LEAD_ENDPOINT ||
-  '/matrius-russian-diagnostika/php/submit.php';
+// URL Cloudflare Worker (matrius-russian-gc-proxy) — задаётся при билде через
+// .env.production: NEXT_PUBLIC_LEAD_ENDPOINT=https://....workers.dev
+// См. _src/worker/README.md для деплоя.
+const LEAD_ENDPOINT = process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '';
 
 export default function LeadForm({ variant = 'light', submitLabel = 'Записаться', onSuccess }: Props) {
   const [name, setName] = useState('');
