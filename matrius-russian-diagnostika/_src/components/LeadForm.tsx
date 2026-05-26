@@ -26,10 +26,16 @@ type Props = {
   onSuccess?: () => void;
 };
 
-// URL Cloudflare Worker (matrius-russian-gc-proxy) — задаётся при билде через
-// .env.production: NEXT_PUBLIC_LEAD_ENDPOINT=https://....workers.dev
-// См. _src/worker/README.md для деплоя.
-const LEAD_ENDPOINT = process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '';
+// PHP-обработчик скорочтения обслуживает все лендинги (как у matrius-summer-school).
+// Лендинг отличаем через offer_code в payload + utm_source.
+const LEAD_ENDPOINT =
+  process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '/skorochtenie-neuro/php/submit.php';
+
+// Оффер этого лендинга (диагностика русского 1-4 класса).
+const OFFER_CODE = '8408464';
+
+// Источник по умолчанию — используется, если в URL не пришёл utm_source с рекламы.
+const DEFAULT_UTM_SOURCE = 'matrius-russian-diagnostika';
 
 export default function LeadForm({ variant = 'light', submitLabel = 'Записаться', onSuccess }: Props) {
   const [name, setName] = useState('');
@@ -78,6 +84,9 @@ export default function LeadForm({ variant = 'light', submitLabel = 'Запис�
       if (typeof document !== 'undefined' && document.referrer) {
         utm['referer'] = document.referrer;
       }
+      // Если рекламная кампания не передала utm_source — маркируем сами,
+      // чтобы в GC лиды этого лендинга можно было отделить от других.
+      if (!utm['utm_source']) utm['utm_source'] = DEFAULT_UTM_SOURCE;
 
       const res = await fetch(LEAD_ENDPOINT, {
         method: 'POST',
@@ -87,7 +96,8 @@ export default function LeadForm({ variant = 'light', submitLabel = 'Запис�
           phone: p,
           email: em,
           age: String(age),
-          company, // honeypot — на бэке если не пустой → 202 silent
+          offer_code: OFFER_CODE,  // override общего GC_OFFER_CODE в submit.php
+          company,                 // honeypot — на бэке если не пустой → 202 silent
           ...utm,
         }),
       });

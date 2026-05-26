@@ -148,7 +148,18 @@ if ($name === '' || $phone === '' || $age === '' || !filter_var($email, FILTER_V
 // ─────────────────────────────────────────────────────────────────────
 // 6. Сборка GC payload
 // ─────────────────────────────────────────────────────────────────────
-$offer = getenv('GC_OFFER_CODE') ?: '';
+// Оффер: payload.offer_code (override от конкретного лендинга) > GC_OFFER_CODE из .env.
+// Этот же обработчик обслуживает несколько лендингов (skorochtenie-neuro,
+// matrius-summer-school, matrius-russian-diagnostika …). Если лендинг
+// передаёт offer_code в payload — используем его; иначе — общий из .env.
+// Backward compatible: лендинги, которые не передают offer_code,
+// продолжают работать как раньше.
+$offerFromPayload = field($payload, 'offer_code', 32);
+// Защита: пускаем только цифры/латиницу/_- (формат allowed offer code в GC).
+if ($offerFromPayload !== '' && !preg_match('/^[A-Za-z0-9_\-]{1,32}$/', $offerFromPayload)) {
+    $offerFromPayload = '';
+}
+$offer = $offerFromPayload !== '' ? $offerFromPayload : (getenv('GC_OFFER_CODE') ?: '');
 if ($offer === '') {
     leadLog('ERROR', 'missing_env', ['env' => 'GC_OFFER_CODE']);
     http_response_code(500);
