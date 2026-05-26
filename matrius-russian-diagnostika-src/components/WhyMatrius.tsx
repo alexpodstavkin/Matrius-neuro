@@ -1,45 +1,46 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Reveal from './Reveal';
 
+// masonic использует ResizeObserver и должен рендериться только на клиенте
+const Masonry = dynamic(() => import('masonic').then((m) => m.Masonry), {
+  ssr: false,
+  loading: () => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="rounded-[22px] bg-[#F4F5F8] aspect-[3/2] animate-pulse" />
+      ))}
+    </div>
+  ),
+}) as unknown as typeof import('masonic').Masonry;
+
 type Feature = {
+  id: number;
   image: string;
   alt: string;
+  /** width / height — для CSS aspect-ratio, чтобы masonic знал высоту до загрузки */
+  ratio: string;
 };
 
 const FEATURES: Feature[] = [
-  {
-    image: 'why-matrius/platform.png',
-    alt: 'Собственная игровая платформа Matrius',
-  },
-  {
-    image: 'why-matrius/stats.png',
-    alt: '7+ лет на рынке, 50 000+ учеников',
-  },
-  {
-    image: 'why-matrius/license.png',
-    alt: 'Образовательная лицензия и резидентство в Сколково',
-  },
-  {
-    image: 'why-matrius/motivation.png',
-    alt: 'Поддержка интереса и мотивации',
-  },
-  {
-    image: 'why-matrius/teachers.png',
-    alt: 'Индивидуальный подбор преподавателей',
-  },
-  {
-    image: 'why-matrius/series.png',
-    alt: 'Собственный мультсериал Matrius',
-  },
+  { id: 1, image: 'why-matrius/platform.png',   alt: 'Собственная игровая платформа Matrius',          ratio: '1814 / 532'  },
+  { id: 2, image: 'why-matrius/stats.png',      alt: '7+ лет на рынке, 50 000+ учеников',              ratio: '922 / 532'   },
+  { id: 3, image: 'why-matrius/license.png',    alt: 'Образовательная лицензия и резидентство в Сколково', ratio: '922 / 1100' },
+  { id: 4, image: 'why-matrius/motivation.png', alt: 'Поддержка интереса и мотивации',                 ratio: '922 / 560'   },
+  { id: 5, image: 'why-matrius/teachers.png',   alt: 'Индивидуальный подбор преподавателей',           ratio: '844 / 560'   },
+  { id: 6, image: 'why-matrius/series.png',     alt: 'Собственный мультсериал Matrius',                ratio: '1814 / 494'  },
 ];
 
-function FeatureCard({ feature }: { feature: Feature }) {
+function MasonryCard({ data }: { data: Feature }) {
   return (
-    <div className="rounded-[22px] overflow-hidden aspect-[3/2] shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white">
+    <div
+      className="rounded-[22px] overflow-hidden shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white"
+      style={{ aspectRatio: data.ratio }}
+    >
       <img
-        src={feature.image}
-        alt={feature.alt}
+        src={data.image}
+        alt={data.alt}
         loading="lazy"
         className="block w-full h-full object-cover"
       />
@@ -60,17 +61,17 @@ export default function WhyMatrius() {
                 </h2>
               </div>
 
-              {/* Простая адаптивная сетка 3×2 на lg, 2 на sm, 1 на mobile.
-                  Все 6 скринов приведены к aspect 3:2 (см. public/why-matrius/) —
-                  поля у узких скринов залиты своим фоновым цветом, на десктопе
-                  и мобиле выглядят одинаково без обрезки текста. */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
-                {FEATURES.map((f, i) => (
-                  <Reveal key={f.image} delay={0.05 * i}>
-                    <FeatureCard feature={f} />
-                  </Reveal>
-                ))}
-              </div>
+              {/* masonic — настоящий JS-masonry. Сам считает кол-во колонок из ширины
+                  контейнера / columnWidth, измеряет высоту каждой карточки и кладёт
+                  следующую в самую короткую колонку → колонки сбалансированы по высоте,
+                  скрины в родных пропорциях без обрезки и без полей. */}
+              <Masonry
+                items={FEATURES}
+                columnWidth={300}
+                columnGutter={20}
+                rowGutter={20}
+                render={MasonryCard}
+              />
             </article>
           </div>
         </Reveal>
