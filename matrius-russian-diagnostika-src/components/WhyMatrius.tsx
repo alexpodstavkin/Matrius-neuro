@@ -53,12 +53,12 @@ const FEATURES: Feature[] = [
 
 function FeatureCard({ feature }: { feature: Feature }) {
   return (
-    <div className="rounded-[22px] overflow-hidden md:aspect-[4/3] lg:aspect-auto md:h-full shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white">
+    <div className="rounded-[22px] overflow-hidden md:aspect-[4/3] lg:aspect-auto md:h-full shadow-[0_8px_28px_-18px_rgba(31,42,68,0.18)] ring-1 ring-black/[0.05] bg-white flex items-center justify-center">
       <img
         src={feature.image}
         alt={feature.alt}
         loading="lazy"
-        className="block w-full h-auto md:h-full md:object-cover"
+        className="block w-full h-auto md:h-full md:w-full md:object-contain"
       />
     </div>
   );

@@ -10,27 +10,23 @@ export default function ArtemCase({ onCTA }: Props) {
       <div className="container-x section">
         <Reveal>
           <div className="shell">
-            <article className="dark-inner relative overflow-hidden rounded-[26px] bg-navy text-white p-8 md:p-12 lg:p-16">
-              {/* Pattern background */}
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  backgroundImage: 'url(matrius-pattern.png)',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  opacity: 0.04,
-                }}
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-orange/20 blur-3xl"
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-navy-light/30 blur-3xl"
-                aria-hidden
-              />
+            <article className="dark-inner relative rounded-[26px] bg-navy text-white p-8 md:p-12 lg:p-16">
+              {/* Декор в отдельном wrapper с overflow-hidden,
+                  чтобы position:sticky внутри grid работал */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[26px]" aria-hidden>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: 'url(matrius-pattern.png)',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                    opacity: 0.04,
+                  }}
+                />
+                <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-orange/20 blur-3xl" />
+                <div className="absolute -left-32 -bottom-32 h-80 w-80 rounded-full bg-navy-light/30 blur-3xl" />
+              </div>
 
               <div className="relative max-w-3xl mb-10 md:mb-14">
                 <div className="inline-flex items-center gap-2 rounded-full bg-orange/20 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-orange mb-4 ring-1 ring-orange/30">
@@ -45,8 +41,11 @@ export default function ArtemCase({ onCTA }: Props) {
               </div>
 
               <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
-                {/* Фото — слева */}
-                <Reveal className="md:col-span-5 lg:col-span-4" delay={0.08}>
+                {/* Фото — слева, прилипает к верху viewport на скролле (md+) */}
+                <Reveal
+                  className="md:col-span-5 lg:col-span-4 md:sticky md:top-8 md:self-start"
+                  delay={0.08}
+                >
                   <div className="relative aspect-[4/5] rounded-[22px] overflow-hidden bg-navy-light ring-1 ring-white/10">
                     <img
                       src="cases/artem.jpg"
