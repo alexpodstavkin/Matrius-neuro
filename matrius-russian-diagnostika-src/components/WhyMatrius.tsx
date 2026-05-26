@@ -7,6 +7,8 @@ type Feature = {
   alt: string;
   /** bento span на lg-сетке (по умолчанию 1×1) */
   span?: string;
+  /** object-position для object-cover (где текст и важный объект скрина) */
+  position?: string;
   /** скрыть на мобиле (sm и ниже) */
   hideOnMobile?: boolean;
 };
@@ -16,29 +18,35 @@ const FEATURES: Feature[] = [
     image: 'why-matrius/platform.png',
     alt: 'Собственная игровая платформа Matrius',
     span: 'lg:col-span-2',
+    position: 'left center',
     hideOnMobile: true,
   },
   {
     image: 'why-matrius/stats.png',
     alt: '7+ лет на рынке, 50 000+ учеников',
+    position: 'left center',
   },
   {
     image: 'why-matrius/license.png',
     alt: 'Образовательная лицензия и резидентство в Сколково',
     span: 'lg:row-span-2',
+    position: 'center top',
   },
   {
     image: 'why-matrius/motivation.png',
     alt: 'Поддержка интереса и мотивации',
+    position: 'left center',
   },
   {
     image: 'why-matrius/teachers.png',
     alt: 'Индивидуальный подбор преподавателей',
+    position: 'left center',
   },
   {
     image: 'why-matrius/series.png',
     alt: 'Собственный мультсериал Matrius',
     span: 'lg:col-span-2',
+    position: 'left center',
     hideOnMobile: true,
   },
 ];
@@ -51,7 +59,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
         alt={feature.alt}
         loading="lazy"
         className="block w-full h-auto md:h-full md:w-full md:object-cover"
-        style={{ objectPosition: 'center' }}
+        style={{ objectPosition: feature.position ?? 'center' }}
       />
     </div>
   );
@@ -70,8 +78,8 @@ export default function WhyMatrius() {
                 </h2>
               </div>
 
-              {/* Bento — 3 кол на lg, фикс auto-rows под пропорцию ~4:3 */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7 lg:grid-flow-dense lg:[grid-auto-rows:14rem] xl:[grid-auto-rows:17rem] 2xl:[grid-auto-rows:19rem]">
+              {/* Bento — 3 кол на lg, фикс auto-rows под широкие 2-кол скрины (≈2.5:1) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7 lg:grid-flow-dense lg:[grid-auto-rows:10rem] xl:[grid-auto-rows:12rem] 2xl:[grid-auto-rows:14rem]">
                 {FEATURES.map((f, i) => (
                   <Reveal
                     key={f.image}
