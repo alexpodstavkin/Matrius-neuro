@@ -67,7 +67,8 @@ export default function WhyMatrius() {
                   скрины в родных пропорциях без обрезки и без полей. */}
               <Masonry
                 items={FEATURES}
-                columnWidth={300}
+                columnWidth={320}
+                maxColumnCount={3}
                 columnGutter={20}
                 rowGutter={20}
                 render={MasonryCard}
