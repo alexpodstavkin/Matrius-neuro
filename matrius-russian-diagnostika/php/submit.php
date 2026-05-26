@@ -45,7 +45,21 @@ function loadDotEnv(string $path): void {
         }
     }
 }
-loadDotEnv(__DIR__ . '/.env');
+// На сервере используется один общий .env для всех лендингов.
+// Ищем его по приоритету: своя папка → единый .env в skorochtenie-neuro/php/.
+// Можно переопределить путь через переменную окружения GC_DOTENV_PATH.
+foreach (array_filter([
+    getenv('GC_DOTENV_PATH') ?: '',                        // явное переопределение
+    __DIR__ . '/.env',                                     // своя папка
+    __DIR__ . '/../../skorochtenie-neuro/php/.env',        // единый .env у скорочтения
+    __DIR__ . '/../../.env',                               // корень web.matrius.online
+    __DIR__ . '/../.env',                                  // корень лендинга
+]) as $envPath) {
+    if (is_file($envPath) && is_readable($envPath)) {
+        loadDotEnv($envPath);
+        break;
+    }
+}
 
 require_once __DIR__ . '/getcourse.php';
 

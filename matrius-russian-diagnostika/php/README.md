@@ -23,29 +23,32 @@ php/
 
 ## Установка на сервере (один раз)
 
-> `.env` от **`skorochtenie-neuro/php/.env`** содержит **те же** `GC_ACCOUNT` и `GC_SECRET_KEY`
-> — переиспользуем их без повторного ввода.
+> **`.env` копировать не нужно** — на сервере единый файл `.env` для всех лендингов.
+> `submit.php` автоматически ищет его по нескольким путям:
+> 1. `GC_DOTENV_PATH` (если переменная окружения задана)
+> 2. `php/.env` в этой же папке
+> 3. **`../../skorochtenie-neuro/php/.env`** — стандартное место единого .env
+> 4. `../../.env` (корень `web.matrius.online`)
+> 5. `../.env` (корень лендинга)
 
 ```bash
 cd /var/www/web.matrius.online/matrius-russian-diagnostika/php
 
-# 1. Берём рабочий .env из соседнего лендинга и подкладываем сюда.
-cp ../../skorochtenie-neuro/php/.env .env
-
-# 2. Папка для логов.
+# Папка для логов (если её нет — submit.php создаст автоматически,
+# но лучше задать права заранее, чтобы php-fpm не упёрся в permission denied).
 mkdir -p logs
-
-# 3. Права (имя пользователя php-fpm подставьте своё: www-data / nginx / php).
-chown -R www-data:www-data .env logs
-chmod 600 .env
+chown www-data:www-data logs
 chmod 755 logs
-
-# 4. Проверка значений (опционально).
-cat .env | grep -E '^GC_'
 ```
 
-В `.env` оффер можно либо явно прописать `GC_OFFER_CODE=8408464`, либо
-оставить пустым — в `submit.php` он уже стоит fallback'ом.
+Если единый `.env` у вас лежит в нестандартном месте — задайте полный путь через
+переменную окружения в server-блоке nginx:
+
+```nginx
+fastcgi_param GC_DOTENV_PATH /var/www/web.matrius.online/.env;
+```
+
+Оффер `8408464` захардкожен fallback'ом в `submit.php`, в `.env` его дублировать не обязательно.
 
 ## ⚠️ nginx — критично
 
