@@ -148,24 +148,23 @@ if ($name === '' || $phone === '' || $age === '' || !filter_var($email, FILTER_V
 // ─────────────────────────────────────────────────────────────────────
 // 6. Сборка GC payload
 // ─────────────────────────────────────────────────────────────────────
-$offer = getenv('GC_OFFER_CODE') ?: '';
-if ($offer === '') {
-    leadLog('ERROR', 'missing_env', ['env' => 'GC_OFFER_CODE']);
-    http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'server_misconfigured']);
-    exit;
-}
+// Оффер: env > fallback 8408464 (диагностика русского 1-4 класса).
+// Чтобы поменять — задай GC_OFFER_CODE в .env, не редактируй код.
+$offer = getenv('GC_OFFER_CODE') ?: '8408464';
 
 $nameParts = preg_split('/\s+/', $name, 2);
 $firstName = $nameParts[0] ?? $name;
 $lastName  = $nameParts[1] ?? '';
 
-$addfields = ['Возраст ребёнка' => $age];
+$addfields = [
+    'Возраст ребёнка' => $age,
+    'Источник'        => 'Matrius — Диагностика русского 1-4 класса',
+];
 if ($child !== '') {
     $addfields['Имя ребёнка'] = $child;
 }
 
-$dealComment = "Возраст ребёнка: $age";
+$dealComment = "Источник: Matrius — Диагностика русского 1-4 класса\nВозраст ребёнка: $age";
 if ($child !== '') {
     $dealComment .= "\nИмя ребёнка: $child";
 }
