@@ -75,8 +75,8 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 
-    # Запретить раздачу .env и logs/ (на случай если .htaccess не читается)
-    location ~ ^/matrius-russian-diagnostika/php/(\.env|logs/) {
+    # Запретить раздачу исходников, .env, логов (на случай если .htaccess не читается)
+    location ~ ^/matrius-russian-diagnostika/(_src/|php/(\.env|logs/)) {
         deny all;
         return 404;
     }
