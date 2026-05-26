@@ -30,7 +30,7 @@ export default function Methodology() {
             <article className="card-flush p-8 md:p-12 lg:p-16">
               <div className="max-w-4xl mb-10 md:mb-14">
                 <h2 className="h2">
-                  С&nbsp;помощью уникального подхода Matrius ребёнок <span className="text-orange">начинает понимать русский</span> прямо на&nbsp;занятии
+                  Обучаем с&nbsp;помощью уникального подхода Matrius. <span className="text-orange">Результат виден уже на&nbsp;первом занятии</span>
                 </h2>
               </div>
 

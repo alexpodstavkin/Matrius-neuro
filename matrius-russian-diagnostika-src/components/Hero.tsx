@@ -47,7 +47,7 @@ export default function Hero({ onCTA }: Props) {
               className="relative font-bold text-white leading-[1.06] tracking-[-0.02em] mb-6 md:mb-7"
               style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
             >
-              <span className="text-orange">Ребёнок выучил правила по&nbsp;русскому, но&nbsp;всё равно пишет с&nbsp;ошибками?</span> Найдём проблему и&nbsp;решим её&nbsp;за&nbsp;60&nbsp;минут на&nbsp;бесплатной диагностике
+              Найдём проблему низких оценок по&nbsp;русскому языку и&nbsp;<span className="text-orange">решим её&nbsp;за&nbsp;60&nbsp;минут</span> на&nbsp;бесплатной диагностике
             </h1>
             <div className="relative">
               <button type="button" onClick={onCTA} className="btn-primary-wide">

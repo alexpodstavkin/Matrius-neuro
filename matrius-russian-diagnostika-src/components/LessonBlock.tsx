@@ -60,7 +60,7 @@ export default function LessonBlock({ onCTA }: Props) {
                     className="font-bold text-white leading-[1.06] tracking-[-0.02em]"
                     style={{ fontSize: 'clamp(1.625rem, 2.8vw, 2.5rem)' }}
                   >
-                    На&nbsp;<span className="text-orange">бесплатной диагностике</span> вы&nbsp;узнаете, почему у&nbsp;вашего ребёнка низкие оценки по&nbsp;русскому языку
+                    На&nbsp;<span className="text-orange">бесплатной диагностике</span> вы&nbsp;увидите, как ваш ребёнок начинает понимать правила по&nbsp;русскому языку
                   </h2>
                 </div>
 

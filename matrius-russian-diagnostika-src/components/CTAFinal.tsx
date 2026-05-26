@@ -48,7 +48,7 @@ export default function CTAFinal() {
                   className="relative font-bold text-white leading-[1.06] tracking-[-0.02em] mb-6 md:mb-7"
                   style={{ fontSize: 'clamp(1.875rem, 3.4vw, 2.875rem)' }}
                 >
-                  <span className="text-orange">Ребёнок выучил правила по&nbsp;русскому, но&nbsp;всё равно пишет с&nbsp;ошибками?</span> Найдём проблему и&nbsp;решим её&nbsp;за&nbsp;60&nbsp;минут на&nbsp;бесплатной диагностике
+                  Найдём проблему низких оценок по&nbsp;русскому языку и&nbsp;<span className="text-orange">решим её&nbsp;за&nbsp;60&nbsp;минут</span> на&nbsp;бесплатной диагностике
                 </h2>
               </div>
             </div>
