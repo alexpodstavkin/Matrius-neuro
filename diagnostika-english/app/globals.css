@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #385681;
+  --orange: #F49060;
+  --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html, body {
+  background: #EAF1F8;
+  color: #212121;
+  font-family: var(--font-onest), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* { box-sizing: border-box; }
+
+@layer components {
+  .container-x {
+    @apply w-full px-4 md:px-6 lg:px-8;
+  }
+  .section {
+    @apply py-7 md:py-10 lg:py-14;
+  }
+  .h1 {
+    font-size: clamp(2rem, 4.5vw, 3.75rem);
+    line-height: 1.04;
+    font-weight: 700;
+    color: #1F2A44;
+    letter-spacing: -0.02em;
+  }
+  .h2 {
+    font-size: clamp(1.625rem, 3vw, 2.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    color: #1F2A44;
+    letter-spacing: -0.018em;
+  }
+  .h3 {
+    font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+    line-height: 1.22;
+    font-weight: 700;
+    color: #1F2A44;
+    letter-spacing: -0.012em;
+  }
+  .lead {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    line-height: 1.55;
+    font-weight: 400;
+    color: #5A6478;
+    letter-spacing: -0.005em;
+  }
+  .body-strong {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.55;
+    color: #212121;
+  }
+
+  /* === Buttons === */
+  .btn-primary {
+    @apply inline-flex items-center justify-center;
+    background: #F49060;
+    color: #FFFFFF;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition:
+      transform 0.4s var(--ease-apple),
+      background-color 0.3s var(--ease-apple),
+      box-shadow 0.4s var(--ease-apple);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.18) inset,
+      0 6px 16px -10px rgba(244,144,96,0.55),
+      0 14px 28px -16px rgba(31,42,68,0.35);
+    will-change: transform;
+  }
+  .btn-primary:hover {
+    background: #E27A48;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.18) inset,
+      0 10px 24px -10px rgba(244,144,96,0.65),
+      0 22px 40px -18px rgba(31,42,68,0.40);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary-wide {
+    @apply btn-primary;
+    padding-left: 56px;
+    padding-right: 56px;
+    min-width: 280px;
+    font-size: 16px;
+  }
+  @media (max-width: 640px) {
+    .btn-primary-wide {
+      min-width: 0;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+      font-size: 15px;
+    }
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center;
+    background: transparent;
+    color: #385681;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid rgba(56,86,129,0.30);
+    transition:
+      transform 0.4s var(--ease-apple),
+      background-color 0.3s var(--ease-apple),
+      border-color 0.3s var(--ease-apple);
+  }
+  .btn-ghost:hover {
+    background: rgba(56,86,129,0.06);
+    border-color: rgba(56,86,129,0.55);
+  }
+  .btn-ghost:active { transform: scale(0.98); }
+
+  /* === Cards (soft, ambient) === */
+  .card {
+    background: #FFFFFF;
+    border-radius: 28px;
+    box-shadow:
+      0 1px 2px rgba(31,42,68,0.04),
+      0 12px 32px -16px rgba(31,42,68,0.12),
+      0 40px 80px -48px rgba(31,42,68,0.20);
+  }
+  .card-flush { /* для inner cards без тени, на soft surface */
+    background: #FFFFFF;
+    border-radius: 22px;
+  }
+  .card-soft {
+    background: #F8F8F8;
+    border-radius: 22px;
+  }
+
+  /* === Double-bezel shells === */
+  .shell {
+    background: rgba(56,86,129,0.04);
+    border: 1px solid rgba(56,86,129,0.10);
+    padding: 6px;
+    border-radius: 32px;
+    box-shadow:
+      0 1px 2px rgba(31,42,68,0.04),
+      0 20px 60px -32px rgba(31,42,68,0.22);
+  }
+  .shell-warm {
+    background: rgba(244,144,96,0.06);
+    border: 1px solid rgba(244,144,96,0.18);
+    padding: 6px;
+    border-radius: 32px;
+    box-shadow:
+      0 1px 2px rgba(244,144,96,0.05),
+      0 20px 60px -32px rgba(244,144,96,0.22);
+  }
+  /* Dark inner — with inset highlight для эффекта machined metal */
+  .dark-inner {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+
+  /* === Pill / chip === */
+  .pill {
+    @apply inline-flex items-center;
+    background: rgba(255,255,255,0.92);
+    color: #385681;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.18);
+  }
+  .eyebrow {
+    @apply inline-flex items-center rounded-full;
+    background: rgba(244,144,96,0.12);
+    color: #F49060;
+    padding: 6px 14px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .eyebrow-dark {
+    @apply inline-flex items-center rounded-full;
+    background: rgba(255,255,255,0.10);
+    color: #FFFFFF;
+    padding: 6px 14px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* === Form input === */
+  .input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(31,42,68,0.10);
+    background: #FFFFFF;
+    color: #212121;
+    font-size: 16px;
+    transition:
+      border-color 0.3s var(--ease-apple),
+      box-shadow 0.3s var(--ease-apple);
+    outline: none;
+  }
+  .input::placeholder { color: #A8B0BD; }
+  .input:focus {
+    border-color: rgba(56,86,129,0.55);
+    box-shadow: 0 0 0 4px rgba(56,86,129,0.10);
+  }
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* native details/summary */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+
+/* react-masonry-css — динамический masonry для блока WhyMatrius */
+.masonry-grid {
+  display: flex;
+  margin-left: -20px; /* компенсируем padding-left у колонок */
+  width: auto;
+}
+.masonry-grid_column {
+  padding-left: 20px;
+  background-clip: padding-box;
+}
+.masonry-grid_column > div {
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .masonry-grid { margin-left: -28px; }
+  .masonry-grid_column { padding-left: 28px; }
+  .masonry-grid_column > div { margin-bottom: 28px; }
+}
