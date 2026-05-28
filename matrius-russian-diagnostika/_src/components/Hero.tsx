@@ -35,7 +35,7 @@ export default function Hero({ onCTA }: Props) {
                 Онлайн-школа развития детей<br />5–17&nbsp;лет
               </div>
               <span className="inline-flex items-center rounded-full bg-white text-navy ring-1 ring-white/40 px-3 py-1.5 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.14em] whitespace-nowrap shadow-[0_6px_18px_-10px_rgba(0,0,0,0.35)]">
-                Для окончивших 1–4&nbsp;класс
+                Для учеников начальной школы
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white text-navy ring-1 ring-white/40 px-3 py-1.5 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.14em] whitespace-nowrap shadow-[0_6px_18px_-10px_rgba(0,0,0,0.35)]">
                 <span className="inline-block h-2 w-2 rounded-full bg-orange animate-pulse" aria-hidden />
