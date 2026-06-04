@@ -153,8 +153,8 @@ export default function CTAForm() {
                       className="text-white/85 leading-relaxed"
                       style={{ fontSize: 'clamp(1.125rem, 1.6vw, 1.625rem)' }}
                     >
-                      Заполните форму — с&nbsp;вами свяжется специалист, чтобы уточнить детали
-                      доступа к&nbsp;материалам и&nbsp;согласовать удобное время диагностики.
+                      Заполните форму — мы&nbsp;предоставим доступ к&nbsp;материалам
+                      и&nbsp;согласуем удобное время диагностики.
                     </p>
                   </div>
                 </div>
@@ -170,9 +170,9 @@ export default function CTAForm() {
                       <div className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-orange text-white text-2xl font-bold mb-4">
                         ✓
                       </div>
-                      <h3 className="h3 text-navy">Спасибо! Скоро свяжемся.</h3>
+                      <h3 className="h3 text-navy">Спасибо за&nbsp;регистрацию!</h3>
                       <p className="text-ink/75 text-[15px] mt-3 leading-relaxed max-w-sm">
-                        Наш специалист позвонит, чтобы открыть доступ к&nbsp;материалам и&nbsp;согласовать удобное время диагностики.
+                        Доступ к&nbsp;закрытой базе знаний уже на&nbsp;вашей почте.
                       </p>
                     </div>
                   ) : (
