@@ -2,7 +2,11 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
 
+const SITE_URL = 'https://web.matrius.online/matrius-summer-school/'
+const OG_IMAGE = `${SITE_URL}og-image.jpg`
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Закрытая база знаний по скорочтению — Matrius',
   description:
     'Родителям детей 7–14 лет: доступ к закрытой базе материалов Matrius и диагностика чтения в подарок.',
@@ -12,6 +16,23 @@ export const metadata: Metadata = {
       'Доступ к закрытой базе материалов по скорочтению и бесплатная 60-минутная диагностика чтения.',
     type: 'website',
     locale: 'ru_RU',
+    url: SITE_URL,
+    siteName: 'Matrius',
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: 'Закрытая база знаний по скорочтению — Matrius',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Закрытая база знаний по скорочтению — Matrius',
+    description:
+      'Доступ к закрытой базе материалов по скорочтению и бесплатная 60-минутная диагностика чтения.',
+    images: [OG_IMAGE],
   },
 }
 
