@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { background: #ffffff; }
+
+@layer components {
+  /* Контейнер эталона — 1200px */
+  .container-x { @apply mx-auto w-full max-w-content px-5 md:px-8; }
+
+  /* Заголовок секции эталона: 36px / 41px, uppercase, вес 600 */
+  .h-section {
+    @apply text-center uppercase font-semibold text-ink
+           text-[24px] leading-[28px] md:text-[36px] md:leading-[41px];
+  }
+
+  /* Кнопка эталона: 349×45, радиус 8px, 24px текст — в цвете Матриуса */
+  .btn-cta {
+    @apply inline-flex h-[45px] w-full max-w-[349px] items-center justify-center rounded-[8px]
+           bg-cta px-6 text-[18px] font-medium leading-none text-white
+           transition-colors hover:bg-cta-hover;
+    box-shadow: 0 10px 24px rgba(233,69,70,.28), 0 2px 6px rgba(233,69,70,.16);
+  }
+  @screen md {
+    .btn-cta { @apply text-[21px]; }
+  }
+
+  /* Серая карточка эталона */
+  .card-soft { @apply rounded-card bg-surface-card; }
+}
