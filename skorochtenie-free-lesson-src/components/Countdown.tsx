@@ -1,15 +1,13 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { deadlineDate } from './deadline-date'
 
-// Отсчёт до конца дня дедлайна (пн–чт → четверг, пт–вс → понедельник).
-// Считается в браузере, поэтому не устаревает без пересборки.
+// Отсчёт до ближайших 12:00 или 00:00 по времени посетителя — всегда не больше 12 часов.
+// Считается в браузере: одинаков для всех, не сбрасывается при обновлении страницы.
 function left() {
-  const d = deadlineDate()
-  const end = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59)
-  const ms = Math.max(0, end.getTime() - Date.now())
-  const sec = Math.floor(ms / 1000)
-  // дни не показываем — часы копятся сверх 24 (например, 71:59:59)
+  const now = new Date()
+  const end = new Date(now)
+  end.setHours(now.getHours() < 12 ? 12 : 24, 0, 0, 0)
+  const sec = Math.max(0, Math.floor((end.getTime() - now.getTime()) / 1000))
   return {
     hours: Math.floor(sec / 3600),
     minutes: Math.floor((sec % 3600) / 60),
