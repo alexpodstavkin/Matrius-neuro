@@ -2,22 +2,26 @@
 import { useRef, useState } from 'react'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const AGES = ['6–8 лет', '9–10 лет', '11–12 лет']
-const ROLES = ['Родитель', 'Бабушка или дедушка', 'Другой родственник']
+const AGES = Array.from({ length: 5 }, (_, i) => String(i + 6)) // 6..10 — возрастная рамка лендинга
 
-// ЗАГЛУШКА: форма валидирует поля и показывает экран успеха, но заявку никуда не отправляет.
-// Когда будем подключать — POST на общий приёмщик Матриуса /skorochtenie-neuro/php/submit.php
-// (FastAPI, успех = 202), payload как у skorochtenie-urok: name, email, phone, age, utm_* из sessionStorage 'mx_utm'.
+const PHONE_HUMAN = '+7 (985) 219-74-00'
+const PHONE_TEL = '+79852197400'
+
+// Отправка 1-в-1 с /skorochtenie-urok/: POST на общий приёмщик Матриуса
+// /skorochtenie-neuro/php/submit.php (на деле FastAPI → GetCourse, успех = 202),
+// payload: name, phone (+7…), email, age («9 лет»), utm_* из sessionStorage 'mx_utm', referer.
+// Переопределяется через NEXT_PUBLIC_LEAD_ENDPOINT.
 export function RegisterForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [age, setAge] = useState(AGES[0])
-  const [role, setRole] = useState(ROLES[0])
+  const [age, setAge] = useState('')
   const [agree, setAgree] = useState(false)
   const [news, setNews] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [sent, setSent] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [sendError, setSendError] = useState('')
   const formRef = useRef<HTMLFormElement>(null)
 
   // ошибка поля гаснет, как только его начали исправлять
@@ -44,22 +48,62 @@ export function RegisterForm() {
     return out
   }
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (busy) return // защита от двойного клика
     const next: Record<string, string> = {}
     if (!name.trim()) next.name = 'Напишите, как к вам обращаться'
     if (!EMAIL_RE.test(email.trim())) next.email = 'Укажите корректную почту'
     if (phone.replace(/\D/g, '').length !== 11) next.phone = 'Введите номер полностью — 11 цифр'
+    if (!age) next.age = 'Укажите возраст ребёнка'
     if (!agree) next.agree = 'Без согласия мы не сможем принять заявку'
     setErrors(next)
     if (Object.keys(next).length) {
       formRef.current?.querySelector<HTMLElement>('[data-invalid="true"]')?.scrollIntoView({ block: 'center', behavior: 'smooth' })
       return
     }
-    console.info('[stub] заявка не отправлена — форма-заглушка', { name, email, phone, age, role, news })
-    setSent(true)
-    // на мобильном иначе человек остаётся у подвала и не видит экран успеха
-    requestAnimationFrame(() => document.getElementById('form')?.scrollIntoView({ block: 'center', behavior: 'smooth' }))
+
+    setSendError('')
+    setBusy(true)
+    const endpoint = process.env.NEXT_PUBLIC_LEAD_ENDPOINT || '/skorochtenie-neuro/php/submit.php'
+
+    let utms: Record<string, string> = {}
+    try {
+      utms = JSON.parse(sessionStorage.getItem('mx_utm') || '{}')
+    } catch {}
+
+    const payload: Record<string, string> = {
+      name: name.trim(),
+      phone: `+${phone.replace(/\D/g, '')}`,
+      email: email.trim(),
+      age: `${age} лет`,
+      ...utms,
+    }
+    // Помечаем источник, если utm_source не пришёл — чтобы отличать лендинг в GetCourse
+    if (!payload.utm_source) payload.utm_source = 'skorochtenie-free-lesson'
+    if (document.referrer) payload.referer = document.referrer
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (res.ok || res.status === 202) {
+        setSent(true)
+        // на мобильном иначе человек остаётся у подвала и не видит экран успеха
+        requestAnimationFrame(() => document.getElementById('form')?.scrollIntoView({ block: 'center', behavior: 'smooth' }))
+        return
+      }
+      const data = await res.json().catch(() => ({}))
+      if (res.status === 422) setSendError('Проверьте правильность почты и телефона.')
+      else if (res.status === 429) setSendError('Слишком много заявок. Попробуйте через минуту.')
+      else setSendError(data.error || 'Не удалось отправить заявку. Попробуйте ещё раз.')
+    } catch {
+      setSendError('Сеть недоступна. Попробуйте ещё раз.')
+    } finally {
+      setBusy(false)
+    }
   }
 
   const border = (bad?: string) => (bad ? 'border-orange border-2' : 'border-ink/60')
@@ -73,7 +117,11 @@ export function RegisterForm() {
         <p className="mx-auto mt-3 max-w-[420px] text-[16px] leading-[24px] text-ink">
           Позвоним в рабочее время в течение 2 часов, чтобы выбрать удобное время урока.
         </p>
-        <p className="mt-4 text-[13px] text-muted">Тестовый режим: форма пока никуда не отправляет данные.</p>
+        <p className="mx-auto mt-3 max-w-[420px] text-[15px] leading-[22px] text-muted">
+          Позвоним с номера{' '}
+          <a href={`tel:${PHONE_TEL}`} className="whitespace-nowrap font-semibold text-navy underline">{PHONE_HUMAN}</a>
+          {' '}&mdash; сохраните, чтобы не пропустить.
+        </p>
       </div>
     )
   }
@@ -101,21 +149,26 @@ export function RegisterForm() {
 
       <label className="mt-3 block">
         <span className="mb-2.5 block text-[18px] font-medium text-ink">Сколько лет вашему ребёнку?</span>
-        <select value={age} onChange={(e) => setAge(e.target.value)} className={`field ${border()} ${select}`}>
-          {AGES.map((a) => <option key={a}>{a}</option>)}
+        <select value={age} onChange={(e) => { setAge(e.target.value); clear('age') }}
+          data-invalid={errors.age ? 'true' : undefined} aria-invalid={!!errors.age}
+          className={`field ${border(errors.age)} ${select} ${age ? '' : 'text-muted'}`}>
+          <option value="" disabled>Выберите возраст</option>
+          {AGES.map((a) => <option key={a} value={a} className="text-ink">{a} лет</option>)}
         </select>
-      </label>
-      <label className="mt-2 block">
-        <span className="mb-2.5 block text-[18px] font-medium text-ink">Кто вы для ребёнка?</span>
-        <select value={role} onChange={(e) => setRole(e.target.value)} className={`field ${border()} ${select}`}>
-          {ROLES.map((r) => <option key={r}>{r}</option>)}
-        </select>
+        {err(errors.age)}
       </label>
 
-      <button type="submit"
-        className="mx-auto mt-5 h-[64px] w-full rounded-full bg-orange px-9 text-[19px] font-bold text-white max-[300px]:px-4 max-[300px]:text-[17px] shadow-[0_8px_24px_-8px_rgba(239,100,50,.45)] transition-colors hover:bg-orange-hover sm:w-auto">
-        Записаться на бесплатный урок
+      <button type="submit" disabled={busy}
+        className="mx-auto mt-5 h-[64px] w-full rounded-full bg-orange px-9 text-[19px] font-bold text-white max-[300px]:px-4 max-[300px]:text-[17px] shadow-[0_8px_24px_-8px_rgba(239,100,50,.45)] transition-colors hover:bg-orange-hover disabled:opacity-70 sm:w-auto">
+        {busy ? 'Отправляем…' : 'Записаться на бесплатный урок'}
       </button>
+
+      {sendError && (
+        <p className="text-center text-[14px] font-medium leading-snug text-orange-deep">
+          {sendError} Или позвоните нам:{' '}
+          <a href={`tel:${PHONE_TEL}`} className="whitespace-nowrap underline">{PHONE_HUMAN}</a>
+        </p>
+      )}
 
       <div className="mt-4 flex flex-col gap-3 text-[14px] leading-[20px] text-ink">
         <label className="flex items-start gap-2.5" data-invalid={errors.agree ? 'true' : undefined}>

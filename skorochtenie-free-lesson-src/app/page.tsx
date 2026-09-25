@@ -46,7 +46,7 @@ export default function Page() {
 
       {/* H1 */}
       <h1 className="mt-10 sm:mt-[128px] text-[30px] font-bold leading-[1.02] tracking-[-0.8px] text-[#0d0d0d] sm:text-[38px] md:mt-[130px] md:text-[44px] md:leading-[46px] md:tracking-[-1px]">
-        <span className="hl">Бесплатный урок-диагностика по скорочтению</span> для ребёнка <span className="whitespace-nowrap">6–12&nbsp;лет.</span> Покажем ребёнку, что читать можно{' '}
+        <span className="hl">Бесплатный урок-диагностика по скорочтению</span> для ребёнка <span className="whitespace-nowrap">6–10&nbsp;лет.</span> Покажем ребёнку, что читать можно{' '}
         <span className="hl sm:whitespace-nowrap">быстро и с удовольствием</span>
       </h1>
 
