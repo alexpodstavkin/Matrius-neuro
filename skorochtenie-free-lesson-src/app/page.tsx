@@ -45,9 +45,11 @@ export default function Page() {
       </div>
 
       {/* H1 */}
-      <h1 className="mt-10 sm:mt-[128px] text-[30px] font-bold leading-[1.02] tracking-[-0.8px] text-[#0d0d0d] sm:text-[38px] md:mt-[130px] md:text-[44px] md:leading-[46px] md:tracking-[-1px]">
-        <span className="hl">Бесплатная диагностика чтения</span> для ребёнка <span className="whitespace-nowrap">6–10&nbsp;лет.</span> Покажем, что <span className="hl">читать</span> можно{' '}
-        <span className="hl sm:whitespace-nowrap">быстро и с удовольствием</span>
+      <h1 className="mt-10 sm:mt-[128px] text-[min(30px,calc((100vw_-_32px)/11.4))] font-bold leading-[1.02] tracking-[-0.8px] text-[#0d0d0d] sm:text-[38px] md:mt-[130px] md:text-[44px] md:leading-[46px] md:tracking-[-1px]">
+        <span className="hl">Бесплатная диагностика чтения</span> для ребёнка <span className="whitespace-nowrap">6–10&nbsp;лет.</span> Покажем, что{' '}
+        <span className="whitespace-nowrap"><span className="hl">читать</span> можно <span className="hl">быстро&nbsp;и</span></span>
+        <br />
+        <span className="hl whitespace-nowrap">с удовольствием</span>
       </h1>
 
       {/* Navy-карточка */}
